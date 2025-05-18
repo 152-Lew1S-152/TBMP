@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block title %}Детали заказа №{{ order.id }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('auth.profile') }}">Личный кабинет</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Заказ №{{ order.id }}</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">Заказ №{{ order.id }}</h1>
+
+    <div class="card mb-4">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">Информация о заказе</h5>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <p><strong>Номер заказа:</strong> {{ order.id }}</p>
+                    <p><strong>Дата оформления:</strong> {{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</p>
+                    <p>
+                        <strong>Статус:</strong>
+                        <span class="badge {{ 'bg-success' if order.status == 'delivered' else ('bg-warning text-dark' if order.status == 'processing' else 'bg-secondary') }}">
+                            {{ {
+                                'new': 'Новый',
+                                'processing': 'В обработке',
+                                'shipped': 'Отправлен',
+                                'delivered': 'Доставлен',
+                                'cancelled': 'Отменён'
+                            }.get(order.status, 'Неизвестно') }}
+                        </span>
+                    </p>                </div>
+                <div class="col-md-6">
+                    <p><strong>Способ доставки:</strong> 
+                        {% if order.shipping_method == 'courier' %}
+                            Курьерская доставка
+                        {% elif order.shipping_method == 'pickup' %}
+                            Самовывоз
+                        {% else %}
+                            {{ order.shipping_method or 'Не указан' }}
+                        {% endif %}
+                    </p>
+                    <p><strong>Способ оплаты:</strong> 
+                        {% if order.payment_method == 'card' %}
+                            Оплата картой онлайн
+                        {% elif order.payment_method == 'cash' %}
+                            Оплата при получении
+                        {% elif order.payment_method == 'installment' %}
+                            Рассрочка
+                        {% else %}
+                            {{ order.payment_method or 'Не указан' }}
+                        {% endif %}
+                    </p>
+                    <p><strong>Общая сумма:</strong> {{ order.total_price }} ₽</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">                <div class="col-md-6 mb-3">
+                    <h5>Адрес доставки</h5>
+                    <p>{{ order.shipping_address or current_user.address or 'Адрес не указан' }}</p>
+                    {% if order.notes %}
+                    <h5 class="mt-3">Примечание к заказу</h5>
+                    <p>{{ order.notes }}</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <h5>Контактные данные</h5>
+                    <p>{{ current_user.first_name }} {{ current_user.last_name }}<br>
+                    {{ current_user.phone }}<br>
+                    {{ current_user.email }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">Товары в заказе</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Товар</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            <th>Сумма</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-3">
+                                            {% if item.product.image %}
+                                                <img src="{{ url_for('static', filename='img/products/' + item.product.image) }}" alt="{{ item.product.name }}" width="50">
+                                            {% else %}
+                                                <img src="{{ url_for('static', filename='img/no-image.png') }}" alt="Нет изображения" width="50">
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            <a href="{{ url_for('catalog.product_detail', product_id=item.product_id) }}">{{ item.product.name }}</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ item.price }} ₽</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.price * item.quantity }} ₽</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="3" class="text-end">Товары:</th>
+                            <th>{{ order.subtotal }} ₽</th>
+                        </tr>
+                        <tr>
+                            <th colspan="3" class="text-end">Доставка:</th>
+                            <th>{{ order.shipping_cost or 0 }} ₽</th>
+                        </tr>
+                        <tr>
+                            <th colspan="3" class="text-end">Итого:</th>
+                            <th>{{ order.total_price }} ₽</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>    <div class="d-flex justify-content-between">
+        <a href="{{ url_for('auth.profile') }}" class="btn btn-secondary"><i class="fas fa-arrow-left me-2"></i>Вернуться к заказам</a>
+        
+        {% if order.status in ['new', 'processing'] %}
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
+                <i class="fas fa-times-circle me-2"></i>Отменить заказ
+            </button>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Модальное окно отмены заказа -->
+<div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelOrderModalLabel">Отмена заказа</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены, что хотите отменить заказ №{{ order.id }}?</p>
+                <p>Это действие нельзя будет отменить.</p>
+            </div>            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <form action="{{ url_for('auth.cancel_order', order_id=order.id) }}" method="post" id="cancelOrderForm">
+                    <button type="submit" class="btn btn-danger" onclick="this.innerHTML='<span class=\'spinner-border spinner-border-sm\' role=\'status\' aria-hidden=\'true\'></span> Отмена заказа...'; this.disabled=true; document.getElementById('cancelOrderForm').submit();">Отменить заказ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,403 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - {{ product.name }}{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('catalog.index') }}">Каталог</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('catalog.category', category_id=product.category_id) }}">{{ product.category.name }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+    </ol>
+</nav>
+
+<div class="product-detail">
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="product-image-container text-center p-4 bg-white rounded shadow-sm">
+                {% if product.image %}
+                <img src="{{ url_for('static', filename='img/products/' + product.image) }}" class="img-fluid product-detail-img" alt="{{ product.name }}">
+                {% else %}
+                <img src="{{ url_for('static', filename='img/no-image.png') }}" class="img-fluid product-detail-img" alt="No image available">
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <h1 class="mb-2">{{ product.name }}</h1>
+            <p class="text-muted mb-3">Артикул: {{ product.id }}</p>
+            
+            <div class="product-rating mb-3">
+                <span class="text-warning">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </span>
+                <span class="text-muted ms-2">4.0 (12 отзывов)</span>
+            </div>
+            
+            <div class="product-price mb-3">
+                <h2 class="text-primary fw-bold">{{ product.price|round|int }} ₽</h2>
+                <p class="text-success mb-0">
+                    <i class="fas fa-check-circle"></i>
+                    {% if product.stock > 0 %}
+                        В наличии ({{ product.stock }} шт.)
+                    {% else %}
+                        Нет в наличии
+                    {% endif %}
+                </p>
+            </div>
+            
+            <div class="product-actions mb-4">
+                <form action="{{ url_for('cart.add_to_cart', product_id=product.id) }}" method="post" class="add-to-cart-form">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="input-group">
+                                <button type="button" class="btn btn-outline-secondary decrease-btn"><i class="fas fa-minus"></i></button>
+                                <input type="number" class="form-control text-center quantity-input" name="quantity" value="1" min="1" max="{{ product.stock }}">
+                                <button type="button" class="btn btn-outline-secondary increase-btn"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-8 mb-3">                            <button type="submit" class="btn btn-success w-100" {% if product.stock <= 0 %}disabled{% endif %}>
+                                <i class="fas fa-shopping-cart me-2"></i> В корзину
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <button class="btn btn-outline-secondary w-100">
+                            <i class="far fa-heart me-2"></i> В избранное
+                        </button>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <button class="btn btn-outline-secondary w-100">
+                            <i class="fas fa-balance-scale me-2"></i> Сравнить
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-delivery border rounded p-3 mb-4">
+                <h5 class="mb-3">Доставка и оплата</h5>
+                <div class="d-flex mb-2">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-truck text-primary me-2"></i>
+                    </div>
+                    <div>
+                        <strong>Доставка курьером:</strong> от 300 ₽
+                    </div>
+                </div>
+                <div class="d-flex mb-2">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-store text-success me-2"></i>
+                    </div>
+                    <div>
+                        <strong>Самовывоз из офиса TBMP:</strong> бесплатно
+                    </div>
+                </div>
+                <div class="d-flex mb-2">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-credit-card text-primary me-2"></i>
+                    </div>
+                    <div>
+                        <strong>Способы оплаты:</strong> наличные, карты, рассрочка
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-benefits">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-shield-alt text-primary me-2"></i>
+                            </div>
+                            <div>
+                                <strong>Гарантия</strong><br>
+                                12 месяцев
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-sync-alt text-success me-2"></i>
+                            </div>
+                            <div>
+                                <strong>Возврат</strong><br>
+                                14 дней
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="product-tabs mt-4">
+        <ul class="nav nav-tabs" id="productTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Описание</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs" type="button" role="tab" aria-controls="specs" aria-selected="false">Характеристики</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Отзывы</button>
+            </li>
+        </ul>
+        <div class="tab-content p-4 border border-top-0 rounded-bottom" id="productTabsContent">
+            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                <h4 class="mb-3">Описание товара</h4>
+                <p>{{ product.description }}</p>
+            </div>
+            <div class="tab-pane fade" id="specs" role="tabpanel" aria-labelledby="specs-tab">
+                <h4 class="mb-3">Технические характеристики</h4>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Производитель</th>
+                            <td>{% if 'Apple' in product.name %}Apple{% elif 'Samsung' in product.name %}Samsung{% else %}Производитель{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Модель</th>
+                            <td>{{ product.name }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Год выпуска</th>
+                            <td>2023</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Гарантия</th>
+                            <td>12 месяцев</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Страна производства</th>
+                            <td>{% if 'Apple' in product.name %}Китай{% elif 'Samsung' in product.name %}Вьетнам{% else %}Китай{% endif %}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                <h4 class="mb-3">Отзывы покупателей</h4>
+                
+                <div class="review-summary mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-3 text-center">
+                            <div class="display-4 fw-bold text-primary">4.0</div>
+                            <div class="text-warning mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <div class="text-muted">12 отзывов</div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="rating-breakdown">
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="text-nowrap me-2">5 <i class="fas fa-star text-warning"></i></div>
+                                    <div class="progress flex-grow-1" style="height: 10px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="ms-2">6</div>
+                                </div>
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="text-nowrap me-2">4 <i class="fas fa-star text-warning"></i></div>
+                                    <div class="progress flex-grow-1" style="height: 10px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="ms-2">4</div>
+                                </div>
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="text-nowrap me-2">3 <i class="fas fa-star text-warning"></i></div>
+                                    <div class="progress flex-grow-1" style="height: 10px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="ms-2">1</div>
+                                </div>
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="text-nowrap me-2">2 <i class="fas fa-star text-warning"></i></div>
+                                    <div class="progress flex-grow-1" style="height: 10px;">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 5%;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="ms-2">1</div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="text-nowrap me-2">1 <i class="fas fa-star text-warning"></i></div>
+                                    <div class="progress flex-grow-1" style="height: 10px;">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="ms-2">0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="review-list">
+                    <div class="review-item p-3 border-bottom">
+                        <div class="d-flex justify-content-between mb-2">
+                            <div>
+                                <h5 class="mb-1">Андрей П.</h5>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="text-muted">20.04.2023</div>
+                        </div>
+                        <p class="review-text">Отличный продукт! Очень доволен покупкой. Качество на высоте, все функции работают отлично. Рекомендую всем.</p>
+                        <div class="review-images">
+                            <div class="d-flex flex-wrap">
+                                <div class="review-image me-2 mb-2">
+                                    <img src="{{ url_for('static', filename='img/no-image.png') }}" alt="Review image" class="img-thumbnail" width="100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="review-item p-3 border-bottom">
+                        <div class="d-flex justify-content-between mb-2">
+                            <div>
+                                <h5 class="mb-1">Елена С.</h5>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="text-muted">15.03.2023</div>
+                        </div>
+                        <p class="review-text">Хороший товар за свои деньги. Единственный недостаток - не очень емкая батарея. В остальном все устраивает.</p>
+                    </div>
+                    
+                    <div class="review-item p-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <div>
+                                <h5 class="mb-1">Игорь К.</h5>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="text-muted">02.02.2023</div>
+                        </div>
+                        <p class="review-text">Средний товар. Есть некоторые недочеты в работе, но в целом справляется со своими функциями.</p>
+                    </div>
+                </div>
+                
+                <div class="review-form mt-4">
+                    <h5>Оставить отзыв</h5>
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Ваша оценка</label>
+                            <div class="rating-stars">
+                                <i class="far fa-star fa-lg text-warning me-1"></i>
+                                <i class="far fa-star fa-lg text-warning me-1"></i>
+                                <i class="far fa-star fa-lg text-warning me-1"></i>
+                                <i class="far fa-star fa-lg text-warning me-1"></i>
+                                <i class="far fa-star fa-lg text-warning"></i>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewText" class="form-label">Ваш отзыв</label>
+                            <textarea class="form-control" id="reviewText" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewImages" class="form-label">Добавить фото (опционально)</label>
+                            <input class="form-control" type="file" id="reviewImages" multiple>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить отзыв</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="related-products mt-5">
+        <h2 class="mb-4">Похожие товары</h2>
+        <div class="row">
+            {% for product in related_products %}
+            <div class="col-md-3 mb-4">
+                <div class="card h-100">
+                    <div class="product-img-container">
+                        {% if product.image %}
+                        <img src="{{ url_for('static', filename='img/products/' + product.image) }}" class="card-img-top product-img" alt="{{ product.name }}">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='img/no-image.png') }}" class="card-img-top product-img" alt="No image available">
+                        {% endif %}
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text mb-2">{{ product.description[:60] }}...</p>
+                        <div class="mt-auto">
+                            <p class="text-primary fw-bold mb-2">{{ product.price|round|int }} ₽</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ url_for('catalog.product_detail', product_id=product.id) }}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                                <form action="{{ url_for('cart.add_to_cart', product_id=product.id) }}" method="post">
+                                    <input type="hidden" name="quantity" value="1">                                    <button type="submit" class="btn btn-success btn-sm">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Rating stars functionality
+    const ratingStars = document.querySelectorAll('.rating-stars .fa-star');
+    let currentRating = 0;
+    
+    ratingStars.forEach((star, index) => {
+        star.addEventListener('click', () => {
+            currentRating = index + 1;
+            updateStars();
+        });
+        
+        star.addEventListener('mouseover', () => {
+            updateStars(index + 1);
+        });
+        
+        star.addEventListener('mouseout', () => {
+            updateStars();
+        });
+    });
+    
+    function updateStars(hover = null) {
+        ratingStars.forEach((star, index) => {
+            if (index < (hover || currentRating)) {
+                star.classList.remove('far');
+                star.classList.add('fas');
+            } else {
+                star.classList.remove('fas');
+                star.classList.add('far');
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

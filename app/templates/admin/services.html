@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Управление услугами{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('auth.profile') }}">Личный кабинет</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('admin_panel.index') }}">Админ-панель</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Услуги</li>
+        </ol>
+    </nav>
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Управление услугами</h1>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+            <i class="fas fa-plus"></i> Добавить услугу
+        </button>
+    </div>
+
+    <div class="row">
+        <!-- Боковое меню -->
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Управление сайтом</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{{ url_for('admin_panel.index') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-tachometer-alt me-2"></i>Панель управления
+                    </a>
+                    <a href="{{ url_for('admin_panel.products') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-mobile-alt me-2"></i>Товары
+                    </a>
+                    <a href="{{ url_for('admin_panel.categories') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-th-large me-2"></i>Категории
+                    </a>
+                    <a href="{{ url_for('admin_panel.tariffs') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-list me-2"></i>Тарифы
+                    </a>
+                    <a href="{{ url_for('admin_panel.services') }}" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-cogs me-2"></i>Услуги
+                    </a>
+                    <a href="{{ url_for('admin_panel.orders') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-shopping-cart me-2"></i>Заказы
+                    </a>
+                    <a href="{{ url_for('admin_panel.users') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-users me-2"></i>Пользователи
+                    </a>
+                    <a href="{{ url_for('auth.profile') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-arrow-left me-2"></i>Вернуться в профиль
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="col-md-9">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h5 class="mb-0">Список услуг</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <form class="d-flex">
+                                <input class="form-control me-2" type="search" placeholder="Поиск услуг..." aria-label="Search">
+                                <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Название</th>
+                                    <th>Категория</th>
+                                    <th>Стоимость</th>
+                                    <th>Длительность</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for service in services %}
+                                <tr>
+                                    <td>{{ service.id }}</td>
+                                    <td>{{ service.name }}</td>
+                                    <td>
+                                        {% if service.category == 'internet' %}
+                                            <span class="badge bg-primary">Интернет</span>
+                                        {% elif service.category == 'calls' %}
+                                            <span class="badge bg-success">Звонки</span>
+                                        {% elif service.category == 'security' %}
+                                            <span class="badge bg-warning">Безопасность</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">Другое</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ service.price|round|int }} ₽</td>
+                                    <td>{{ service.duration }}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="button" class="btn btn-outline-primary" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#editServiceModal" 
+                                                data-id="{{ service.id }}"
+                                                data-name="{{ service.name }}"
+                                                data-category="{{ service.category }}"
+                                                data-price="{{ service.price }}"
+                                                data-duration="{{ service.duration }}"
+                                                data-description="{{ service.description if service.description else '' }}">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#deleteServiceModal" 
+                                                data-id="{{ service.id }}"
+                                                data-name="{{ service.name }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальные окна -->
+<!-- Добавление услуги -->
+<div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addServiceModalLabel">Добавить услугу</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ url_for('admin_panel.add_service') }}" method="post">
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="name" class="form-label">Название услуги</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="category" class="form-label">Категория</label>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="internet">Интернет</option>
+                                <option value="calls">Звонки</option>
+                                <option value="security">Безопасность</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="price" class="form-label">Стоимость (₽)</label>
+                            <input type="number" class="form-control" id="price" name="price" step="0.01" min="0" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="duration" class="form-label">Длительность</label>
+                            <input type="text" class="form-control" id="duration" name="duration" placeholder="например, месяц" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Описание</label>
+                        <textarea class="form-control" id="description" name="description" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Редактирование услуги -->
+<div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editServiceModalLabel">Редактировать услугу</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ url_for('admin_panel.edit_service') }}" method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="editId" name="id">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="editName" class="form-label">Название услуги</label>
+                            <input type="text" class="form-control" id="editName" name="name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="editCategory" class="form-label">Категория</label>
+                            <select class="form-select" id="editCategory" name="category" required>
+                                <option value="internet">Интернет</option>
+                                <option value="calls">Звонки</option>
+                                <option value="security">Безопасность</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="editPrice" class="form-label">Стоимость (₽)</label>
+                            <input type="number" class="form-control" id="editPrice" name="price" step="0.01" min="0" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="editDuration" class="form-label">Длительность</label>
+                            <input type="text" class="form-control" id="editDuration" name="duration" placeholder="например, месяц" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDescription" class="form-label">Описание</label>
+                        <textarea class="form-control" id="editDescription" name="description" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Удаление услуги -->
+<div class="modal fade" id="deleteServiceModal" tabindex="-1" aria-labelledby="deleteServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteServiceModalLabel">Подтверждение удаления</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены, что хотите удалить услугу "<span id="deleteServiceName"></span>"?</p>
+                <p class="text-danger">Это действие невозможно отменить.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <form action="{{ url_for('admin_panel.delete_service') }}" method="post">
+                    <input type="hidden" id="deleteId" name="id">
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Редактирование услуги
+    const editServiceModal = document.getElementById('editServiceModal');
+    editServiceModal.addEventListener('show.bs.modal', function(event) {
+        const button = event.relatedTarget;
+        const id = button.getAttribute('data-id');
+        const name = button.getAttribute('data-name');
+        const category = button.getAttribute('data-category');
+        const price = button.getAttribute('data-price');
+        const duration = button.getAttribute('data-duration');
+        const description = button.getAttribute('data-description');
+        
+        document.getElementById('editId').value = id;
+        document.getElementById('editName').value = name;
+        document.getElementById('editCategory').value = category || 'other';
+        document.getElementById('editPrice').value = price;
+        document.getElementById('editDuration').value = duration;
+        document.getElementById('editDescription').value = description;
+    });
+    
+    // Удаление услуги
+    const deleteServiceModal = document.getElementById('deleteServiceModal');
+    deleteServiceModal.addEventListener('show.bs.modal', function(event) {
+        const button = event.relatedTarget;
+        const id = button.getAttribute('data-id');
+        const name = button.getAttribute('data-name');
+        
+        document.getElementById('deleteId').value = id;
+        document.getElementById('deleteServiceName').textContent = name;
+    });
+});
+</script>
+{% endblock %}

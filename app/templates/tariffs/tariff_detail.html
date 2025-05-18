@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ tariff.name }}{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('tariffs.index') }}">Тарифы</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ tariff.name }}</li>
+    </ol>
+</nav>
+
+<div class="tariff-detail">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="mb-3">{{ tariff.name }}</h1>
+            <p class="lead mb-4">{{ tariff.description }}</p>
+              <div class="tariff-price mb-4">
+                <h2 class="text-danger">{{ tariff.price|round|int }} ₽/{{ tariff.period }}</h2>
+                
+                <!-- Кнопки подключения тарифа с учетом статуса текущей подписки -->
+                {% if current_user.is_authenticated %}
+                    {% if user_subscription and user_subscription.status == 'active' %}
+                        <div class="mt-3 alert alert-success">
+                            <i class="fas fa-check-circle me-2"></i> У вас активирован данный тариф до {{ user_subscription.expires_at.strftime('%d.%m.%Y') }}
+                        </div>
+                    {% elif user_subscription and user_subscription.status == 'pending' %}
+                        <div class="mt-3 alert alert-warning">
+                            <i class="fas fa-clock me-2"></i> Заявка на подключение этого тарифа находится на рассмотрении
+                            <p class="small mb-0 mt-1">Дата подачи заявки: {{ user_subscription.created_at.strftime('%d.%m.%Y %H:%M') }}</p>
+                        </div>
+                    {% else %}
+                        <form method="post" action="{{ url_for('tariffs.subscribe_to_tariff', tariff_id=tariff.id) }}">
+                            <button type="submit" class="btn btn-danger btn-lg mt-3">Подключить тариф</button>
+                        </form>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-danger btn-lg mt-3">
+                        Войдите для подключения тарифа
+                    </a>
+                {% endif %}
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Что входит в тариф</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-globe fa-2x text-danger me-3"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">Интернет</h5>
+                                    <p class="mb-0">
+                                        {% if "Безлимит" in tariff.name %}
+                                            Безлимитный
+                                        {% elif "Оптима" in tariff.name %}
+                                            30 ГБ
+                                        {% else %}
+                                            15 ГБ
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-phone-alt fa-2x text-danger me-3"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">Минуты</h5>
+                                    <p class="mb-0">
+                                        {% if "Безлимит" in tariff.name %}
+                                            1000 минут
+                                        {% elif "Оптима" in tariff.name %}
+                                            500 минут
+                                        {% else %}
+                                            200 минут
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-comment-alt fa-2x text-danger me-3"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">SMS</h5>
+                                    <p class="mb-0">
+                                        {% if "Безлимит" in tariff.name %}
+                                            100 SMS
+                                        {% elif "Оптима" in tariff.name %}
+                                            50 SMS
+                                        {% else %}
+                                            30 SMS
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-users fa-2x text-danger me-3"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">Дополнительно</h5>
+                                    <p class="mb-0">
+                                        {% if "Безлимит" in tariff.name %}
+                                            Безлимитные соцсети и YouTube
+                                        {% elif "Оптима" in tariff.name %}
+                                            Безлимитные соцсети
+                                        {% else %}
+                                            Безлимитные мессенджеры
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <h3 class="mb-3">Подробное описание</h3>
+                <p>{{ tariff.description }}</p>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Абонентская плата
+                        <span class="badge bg-danger rounded-pill">{{ tariff.price|round|int }} ₽/{{ tariff.period }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Интернет
+                        <span>
+                            {% if "Безлимит" in tariff.name %}
+                                Безлимитный
+                            {% elif "Оптима" in tariff.name %}
+                                30 ГБ
+                            {% else %}
+                                15 ГБ
+                            {% endif %}
+                        </span>
+                    </li>                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Звонки внутри сети
+                        <span>Безлимитно</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Звонки на другие номера России
+                        <span>
+                            {% if "Безлимит" in tariff.name %}
+                                1000 минут
+                            {% elif "Оптима" in tariff.name %}
+                                500 минут
+                            {% else %}
+                                200 минут
+                            {% endif %}
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Входящие звонки в поездках по России
+                        <span>Безлимитно</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        SMS
+                        <span>
+                            {% if "Безлимит" in tariff.name %}
+                                100 SMS
+                            {% elif "Оптима" in tariff.name %}
+                                50 SMS
+                            {% else %}
+                                30 SMS
+                            {% endif %}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="mb-4">
+                <h3 class="mb-3">Дополнительные опции</h3>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Дополнительный интернет</h5>
+                                <p class="card-text">Докупите гигабайты, чтобы не снижать скорость при исчерпании пакета</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-danger fw-bold">от 100 ₽</span>
+                                    <button class="btn btn-sm btn-outline-danger">Добавить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Дополнительные минуты</h5>
+                                <p class="card-text">Пакеты минут для звонков на все сети России</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-danger fw-bold">от 50 ₽</span>
+                                    <button class="btn btn-sm btn-outline-danger">Добавить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Безлимит на соцсети</h5>
+                                <p class="card-text">Используйте соцсети без расхода основного пакета интернета</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-danger fw-bold">150 ₽/мес</span>
+                                    <button class="btn btn-sm btn-outline-danger">Добавить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Родительский контроль</h5>
+                                <p class="card-text">Контроль за использованием интернета детьми</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-danger fw-bold">100 ₽/мес</span>
+                                    <button class="btn btn-sm btn-outline-danger">Добавить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+    </div>
+    
+    <div class="other-tariffs mt-5">
+        <h3 class="mb-4">Другие тарифы</h3>
+        <div class="row">            <div class="col-md-4 mb-4">                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Лайт</h4>
+                        <h5 class="card-subtitle mb-2 text-danger">300 ₽/мес</h5>
+                        <p class="card-text">15 ГБ интернета, 200 минут, безлимитные мессенджеры</p>
+                        <a href="{{ url_for('tariffs.tariff_detail', tariff_id=1) }}" class="btn btn-outline-danger">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Оптима</h4>
+                        <h5 class="card-subtitle mb-2 text-danger">450 ₽/мес</h5>
+                        <p class="card-text">30 ГБ интернета, 500 минут, безлимитные соцсети</p>
+                        <a href="{{ url_for('tariffs.tariff_detail', tariff_id=2) }}" class="btn btn-outline-danger">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Безлимит</h4>
+                        <h5 class="card-subtitle mb-2 text-danger">650 ₽/мес</h5>
+                        <p class="card-text">Безлимитный интернет, 1000 минут, безлимитные соцсети и YouTube</p>
+                        <a href="{{ url_for('tariffs.tariff_detail', tariff_id=3) }}" class="btn btn-outline-danger">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

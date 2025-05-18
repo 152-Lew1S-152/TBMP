@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Личный кабинет{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <h1 class="mb-4">Личный кабинет</h1>
+
+    <div class="row">
+        <!-- Боковое меню -->
+        <div class="col-md-3">
+            <div class="card mb-4">                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Меню</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{{ url_for('auth.profile') }}" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-user me-2"></i>Личные данные
+                    </a>
+                    <a href="{{ url_for('auth.profile') }}#orders" class="list-group-item list-group-item-action">
+                        <i class="fas fa-shopping-bag me-2"></i>Мои заказы
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-heart me-2"></i>Избранное
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-bell me-2"></i>Уведомления
+                    </a>
+                    <a href="{{ url_for('auth.edit_profile') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-cog me-2"></i>Настройки
+                    </a>
+                    {% if current_user.is_admin %}
+                    <a href="{{ url_for('admin_panel.index') }}" class="list-group-item list-group-item-action text-danger">
+                        <i class="fas fa-tools me-2"></i>Админ-панель
+                    </a>
+                    {% endif %}
+                    <a href="{{ url_for('auth.logout') }}" class="list-group-item list-group-item-action text-primary">
+                        <i class="fas fa-sign-out-alt me-2"></i>Выйти
+                    </a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Бонусная программа</h5>
+                </div>
+                <div class="card-body text-center">
+                    <div class="display-6 text-danger mb-2">280</div>
+                    <p class="card-text">Доступные бонусы</p>
+                    <a href="#" class="btn btn-outline-danger btn-sm">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Основная информация -->
+        <div class="col-md-9">
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Личные данные</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <h3>Здравствуйте, {{ current_user.first_name or current_user.username }}!</h3>
+                            <p class="text-muted">Здесь вы можете управлять своей учётной записью, просматривать историю заказов и настраивать личные данные.</p>
+                        </div>
+                        <div class="col-md-4 text-center text-md-end">
+                            <a href="{{ url_for('auth.edit_profile') }}" class="btn btn-outline-danger">
+                                <i class="fas fa-edit me-2"></i>Редактировать профиль
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Контактная информация</h5>
+                            <table class="table">
+                                <tr>
+                                    <th>Имя:</th>
+                                    <td>{{ current_user.first_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Фамилия:</th>
+                                    <td>{{ current_user.last_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td>{{ current_user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Телефон:</th>
+                                    <td>{{ current_user.phone or 'Не указан' }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Адрес доставки</h5>
+                            <p>{{ current_user.address or 'Адрес не указан' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="orders">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">История заказов</h5>
+                </div>
+                <div class="card-body">
+                    {% if orders %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>№ заказа</th>
+                                        <th>Дата</th>
+                                        <th>Статус</th>
+                                        <th>Сумма</th>
+                                        <th>Действия</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                        <tr>
+                                            <td>{{ order.id }}</td>
+                                            <td>{{ order.created_at.strftime('%d.%m.%Y') }}</td>
+                                            <td>                                                <span class="badge {{ 
+                                                    'bg-primary' if order.status == 'new' else
+                                                    'bg-warning text-dark' if order.status == 'processing' else
+                                                    'bg-info text-white' if order.status == 'shipped' else
+                                                    'bg-success' if order.status == 'delivered' else
+                                                    'bg-danger' if order.status == 'cancelled' else
+                                                    'bg-secondary' 
+                                                }}">
+                                                    {{ {
+                                                        'new': 'Новый',
+                                                        'processing': 'В обработке',
+                                                        'shipped': 'Отправлен',
+                                                        'delivered': 'Доставлен',
+                                                        'cancelled': 'Отменён'
+                                                    }.get(order.status, 'Неизвестно') }}
+                                                </span>
+                                            </td>                                            <td>{{ order.total_price }} ₽</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="{{ url_for('auth.order_detail', order_id=order.id) }}" class="btn btn-sm btn-outline-primary">Детали</a>
+                                                    {% if order.status in ['new', 'processing'] %}
+                                                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#cancelOrderModal{{ order.id }}">Отменить</button>
+                                                    {% endif %}
+                                                </div>
+                                                
+                                                {% if order.status in ['new', 'processing'] %}
+                                                <!-- Модальное окно отмены заказа -->
+                                                <div class="modal fade" id="cancelOrderModal{{ order.id }}" tabindex="-1" aria-labelledby="cancelOrderModalLabel{{ order.id }}" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="cancelOrderModalLabel{{ order.id }}">Отмена заказа</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Вы уверены, что хотите отменить заказ №{{ order.id }}?</p>
+                                                                <p>Это действие нельзя будет отменить.</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                                                <form action="{{ url_for('auth.cancel_order', order_id=order.id) }}" method="post">
+                                                                    <button type="submit" class="btn btn-danger">Отменить заказ</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-shopping-bag fa-4x text-muted mb-3"></i>
+                            <h5>У вас пока нет заказов</h5>
+                            <p>Самое время сделать первый заказ!</p>
+                            <a href="{{ url_for('catalog.index') }}" class="btn btn-primary">Перейти в каталог</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

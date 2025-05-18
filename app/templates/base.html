@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TBMP{% endblock %}</title><!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome иконки -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">    <!-- Собственные стили -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gradient_overrides.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/category-icons.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>    <header>        <!-- Верхняя навигационная панель -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <div class="container">                <a class="navbar-brand" href="{{ url_for('main.index') }}">
+                    <img src="{{ url_for('static', filename='img/Logo.svg') }}" alt="TBMP" height="40">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'main.index' %}active{% endif %}" href="{{ url_for('main.index') }}">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint.startswith('catalog') %}active{% endif %}" href="{{ url_for('catalog.index') }}">Каталог</a>
+                        </li>                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint.startswith('tariffs') %}active{% endif %}" href="{{ url_for('tariffs.index') }}">Тарифы и услуги</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'main.contacts' %}active{% endif %}" href="{{ url_for('main.contacts') }}">Контакты</a>
+                        </li>
+                    </ul>
+                    
+                    <form class="d-flex me-2" action="{{ url_for('main.search') }}" method="get">
+                        <input class="form-control me-2" type="search" name="q" placeholder="Поиск" aria-label="Search">
+                        <button class="btn btn-success" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+
+                    <div class="d-flex">                        <a href="{{ url_for('cart.view_cart') }}" class="btn btn-outline-light me-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            {% if current_user.is_authenticated %}
+                                {% set cart_count = current_user.cart_items|length %}
+                                {% if cart_count > 0 %}
+                                    <span class="badge bg-success text-white">{{ cart_count }}</span>
+                                {% endif %}
+                            {% else %}
+                                {% if session.cart %}
+                                    {% set cart_count = session.cart.values()|sum %}
+                                    {% if cart_count > 0 %}
+                                        <span class="badge bg-success text-white">{{ cart_count }}</span>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                        {% if current_user.is_authenticated %}                            <div class="dropdown">
+                                <button class="btn btn-success dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ current_user.username }}
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" href="{{ url_for('auth.profile') }}">Личный кабинет</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('tariffs.my_subscriptions') }}">Мои тарифы</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Выход</a></li>
+                                </ul>
+                            </div>
+                        {% else %}
+                            <a href="{{ url_for('auth.login') }}" class="btn btn-success">Войти</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-4">
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </main>    <footer class="text-white py-4 mt-4" style="background: linear-gradient(135deg, #004080, #005040);">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>О компании</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">История</a></li>
+                        <li><a href="#" class="text-white-50">Руководство</a></li>
+                        <li><a href="#" class="text-white-50">Миссия и ценности</a></li>
+                        <li><a href="#" class="text-white-50">Вакансии</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Клиентам</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Тарифы</a></li>
+                        <li><a href="#" class="text-white-50">Услуги</a></li>
+                        <li><a href="#" class="text-white-50">Акции</a></li>
+                        <li><a href="#" class="text-white-50">Поддержка</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Помощь</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">FAQ</a></li>
+                        <li><a href="#" class="text-white-50">Контактный центр</a></li>
+                        <li><a href="#" class="text-white-50">Обратная связь</a></li>
+                        <li><a href="#" class="text-white-50">Офисы обслуживания</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Контакты</h5>                    <p class="text-white-50">
+                        <i class="fas fa-phone me-2"></i> 8 800 555 3535<br>
+                        <i class="fas fa-envelope me-2"></i> info@tbmp.ru<br>
+                        <i class="fas fa-map-marker-alt me-2"></i> Нижний Новгород, ул. Большая Печерская, д. 18
+                    </p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-2"><i class="fab fa-vk fa-lg"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-telegram fa-lg"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-secondary">
+            <div class="row">                <div class="col-md-6">
+                    <p class="mb-0 text-white-50">&copy; {{ now.year }} ООО «TBMP». Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item"><a href="#" class="text-white-50">Условия использования</a></li>
+                        <li class="list-inline-item"><a href="#" class="text-white-50">Политика конфиденциальности</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>    <!-- Кнопка возврата наверх -->
+    <div class="back-to-top" id="backToTop" style="display: none;">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Собственные скрипты -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/gradient-effects.js') }}"></script>
+    
+    <!-- Скрипт для кнопки возврата наверх -->
+    <script>
+        $(document).ready(function() {
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 300) {
+                    $('#backToTop').fadeIn();
+                } else {
+                    $('#backToTop').fadeOut();
+                }
+            });
+            
+            $('#backToTop').click(function() {
+                $('html, body').animate({scrollTop: 0}, 500);
+                return false;
+            });
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

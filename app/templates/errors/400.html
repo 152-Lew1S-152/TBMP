@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}400 - Некорректный запрос{% endblock %}
+
+{% block content %}
+<div class="container error-page">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 text-center">
+            <h1 class="display-1">400</h1>
+            <h2 class="mb-4">Некорректный запрос</h2>
+            <p class="lead mb-4">Ваш запрос не может быть обработан. Пожалуйста, проверьте данные и попробуйте снова.</p>
+            <div class="mb-5">
+                <a href="{{ url_for('main.index') }}" class="btn btn-primary btn-lg">На главную</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

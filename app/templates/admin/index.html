@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Админ-панель{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('auth.profile') }}">Личный кабинет</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Админ-панель</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">Админ-панель</h1>
+
+    <div class="row">
+        <!-- Боковое меню -->
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Управление сайтом</h5>
+                </div>                <div class="list-group list-group-flush">
+                    <a href="{{ url_for('admin_panel.index') }}" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-tachometer-alt me-2"></i>Панель управления
+                    </a>
+                    <a href="{{ url_for('admin_panel.products') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-mobile-alt me-2"></i>Товары
+                    </a>
+                    <a href="{{ url_for('admin_panel.categories') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-th-large me-2"></i>Категории
+                    </a>                    <a href="{{ url_for('admin_panel.tariffs') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-list me-2"></i>Тарифы
+                    </a>
+                    <a href="{{ url_for('admin_panel.tariff_subscriptions') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-user-check me-2"></i>Подписки на тарифы
+                        {% if pending_subscriptions and pending_subscriptions > 0 %}
+                        <span class="badge bg-danger float-end">{{ pending_subscriptions }}</span>
+                        {% endif %}
+                    </a>
+                    <a href="{{ url_for('admin_panel.services') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-cogs me-2"></i>Услуги
+                    </a>
+                    <a href="{{ url_for('admin_panel.orders') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-shopping-cart me-2"></i>Заказы
+                    </a>
+                    <a href="{{ url_for('admin_panel.users') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-users me-2"></i>Пользователи
+                    </a>
+                    <a href="{{ url_for('auth.profile') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-arrow-left me-2"></i>Вернуться в профиль
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-mobile-alt fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Товары</h5>
+                            <p class="card-text">Управление товарами и их характеристиками</p>                            <a href="{{ url_for('admin_panel.products') }}" class="btn btn-primary">Управлять</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-th-large fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">Категории</h5>
+                            <p class="card-text">Управление категориями товаров</p>
+                            <a href="{{ url_for('admin_panel.categories') }}" class="btn btn-success">Управлять</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-list fa-3x text-info mb-3"></i>
+                            <h5 class="card-title">Тарифы</h5>
+                            <p class="card-text">Управление тарифами и услугами</p>
+                            <a href="{{ url_for('admin_panel.tariffs') }}" class="btn btn-info">Управлять</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-shopping-cart fa-3x text-warning mb-3"></i>
+                            <h5 class="card-title">Заказы</h5>
+                            <p class="card-text">Просмотр и управление заказами</p>                            <a href="{{ url_for('admin_panel.orders') }}" class="btn btn-warning">Управлять</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-users fa-3x text-danger mb-3"></i>
+                            <h5 class="card-title">Пользователи</h5>
+                            <p class="card-text">Управление пользователями сайта</p>
+                            <a href="{{ url_for('admin_panel.users') }}" class="btn btn-danger">Управлять</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-chart-line fa-3x text-secondary mb-3"></i>
+                            <h5 class="card-title">Статистика</h5>
+                            <p class="card-text">Просмотр статистики сайта</p>
+                            <a href="#" class="btn btn-secondary">Просмотр</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

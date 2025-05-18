@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Вход{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">                <div class="card-header bg-primary text-white">
+                    <h1 class="h4 mb-0">Вход в личный кабинет</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Имя пользователя</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Пароль</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                            <label class="form-check-label" for="remember">Запомнить меня</label>
+                        </div>                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Войти</button>
+                        </div>
+                    </form>
+
+                    <div class="mt-4 text-center">                        <p><a href="#" class="text-primary">Забыли пароль?</a></p>
+                        <p>Нет аккаунта? <a href="{{ url_for('auth.register') }}" class="text-primary">Зарегистрироваться</a></p>
+                    </div>
+
+                    <hr>
+
+                    <div class="text-center">
+                        <p class="mb-3">Или войдите через:</p>
+                        <div class="d-flex justify-content-center gap-3">
+                            <button class="btn btn-outline-secondary">
+                                <i class="fab fa-vk me-2"></i>ВКонтакте
+                            </button>
+                            <button class="btn btn-outline-secondary">
+                                <i class="fab fa-google me-2"></i>Google
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

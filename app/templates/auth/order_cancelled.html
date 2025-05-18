@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if success %}
+        Заказ успешно отменен
+    {% else %}
+        Ошибка отмены заказа
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header {% if success %}bg-success{% else %}bg-danger{% endif %} text-white">
+                    <h4 class="mb-0">
+                        {% if success %}
+                            <i class="fas fa-check-circle me-2"></i>Заказ успешно отменен
+                        {% else %}
+                            <i class="fas fa-times-circle me-2"></i>Ошибка отмены заказа
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    {% if success %}
+                        <div class="text-center mb-4">
+                            <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                        </div>
+                        <h5 class="text-center mb-4">Заказ №{{ order.id }} успешно отменен</h5>
+                        <p>Дата отмены: {{ order.updated_at.strftime('%d.%m.%Y %H:%M') if order.updated_at else now.strftime('%d.%m.%Y %H:%M') }}</p>
+                        <p>Все товары из заказа возвращены в наличие.</p>
+                        <p>Если заказ был оплачен, возврат средств будет произведен в течение 3-5 рабочих дней.</p>
+                    {% else %}
+                        <div class="text-center mb-4">
+                            <i class="fas fa-exclamation-triangle text-danger" style="font-size: 4rem;"></i>
+                        </div>
+                        <h5 class="text-center mb-4">Не удалось отменить заказ №{{ order.id }}</h5>
+                        <p>К сожалению, произошла ошибка при отмене заказа.</p>
+                        <p>Возможные причины:</p>
+                        <ul>
+                            <li>Заказ уже находится в статусе, который нельзя отменить (отправлен или доставлен)</li>
+                            <li>Технические проблемы в системе</li>
+                        </ul>
+                        <p>Пожалуйста, свяжитесь с нашей службой поддержки для получения помощи.</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="{{ url_for('auth.order_detail', order_id=order.id) }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-eye me-2"></i>Просмотреть детали заказа
+                    </a>
+                    <a href="{{ url_for('auth.profile') }}" class="btn btn-primary">
+                        <i class="fas fa-list me-2"></i>Список заказов
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

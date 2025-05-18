@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Редактирование профиля{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row">
+        <!-- Боковое меню -->
+        <div class="col-md-3">
+            <div class="card mb-4">                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Меню</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{{ url_for('auth.profile') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-user me-2"></i>Личные данные
+                    </a>
+                    <a href="{{ url_for('auth.profile') }}#orders" class="list-group-item list-group-item-action">
+                        <i class="fas fa-shopping-bag me-2"></i>Мои заказы
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-heart me-2"></i>Избранное
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-bell me-2"></i>Уведомления
+                    </a>                    <a href="{{ url_for('auth.edit_profile') }}" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-cog me-2"></i>Настройки
+                    </a>
+                    {% if current_user.is_admin %}
+                    <a href="{{ url_for('admin_panel.index') }}" class="list-group-item list-group-item-action text-danger">
+                        <i class="fas fa-tools me-2"></i>Админ-панель
+                    </a>
+                    {% endif %}
+                    <a href="{{ url_for('auth.logout') }}" class="list-group-item list-group-item-action text-primary">
+                        <i class="fas fa-sign-out-alt me-2"></i>Выйти
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Форма редактирования профиля -->
+        <div class="col-md-9">
+            <div class="card">                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Редактирование профиля</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="first_name" class="form-label">Имя</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ current_user.first_name }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="last_name" class="form-label">Фамилия</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ current_user.last_name }}">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ current_user.email }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Телефон</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" value="{{ current_user.phone }}" placeholder="+7 (___) ___-__-__">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Адрес доставки</label>
+                            <textarea class="form-control" id="address" name="address" rows="3">{{ current_user.address }}</textarea>
+                        </div>
+
+                        <hr>
+
+                        <h5 class="mb-3">Изменение пароля</h5>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Новый пароль</label>
+                            <input type="password" class="form-control" id="password" name="password">
+                            <div class="form-text">Оставьте поле пустым, если не хотите менять пароль</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password_confirm" class="form-label">Подтверждение нового пароля</label>
+                            <input type="password" class="form-control" id="password_confirm" name="password_confirm">
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('auth.profile') }}" class="btn btn-secondary">Отмена</a>
+                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneInput = document.getElementById('phone');
+        const passwordInput = document.getElementById('password');
+        const passwordConfirmInput = document.getElementById('password_confirm');
+        
+        // Простая маска для телефона
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0 && value[0] !== '7') {
+                value = '7' + value;
+            }
+            
+            let formattedValue = '';
+            if (value.length > 0) {
+                formattedValue = '+' + value[0];
+                if (value.length > 1) {
+                    formattedValue += ' (' + value.substring(1, 4);
+                }
+                if (value.length > 4) {
+                    formattedValue += ') ' + value.substring(4, 7);
+                }
+                if (value.length > 7) {
+                    formattedValue += '-' + value.substring(7, 9);
+                }
+                if (value.length > 9) {
+                    formattedValue += '-' + value.substring(9, 11);
+                }
+            }
+            
+            e.target.value = formattedValue;
+        });
+        
+        // Проверка соответствия паролей
+        document.querySelector('form').addEventListener('submit', function(e) {
+            if (passwordInput.value && passwordInput.value !== passwordConfirmInput.value) {
+                e.preventDefault();
+                alert('Пароли не совпадают!');
+            }
+        });
+    });
+</script>
+{% endblock %}

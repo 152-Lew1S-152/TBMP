@@ -1,0 +1,23 @@
+Здравствуйте, {{ order.user.first_name }}!
+
+Информируем вас о том, что статус вашего заказа №{{ order.id }} был обновлен.
+
+Текущий статус заказа: {{ status_text }}
+
+Информация о заказе:
+- Номер заказа: {{ order.id }}
+- Дата оформления: {{ order.created_at.strftime('%d.%m.%Y %H:%M') }}
+- Общая сумма: {{ order.total_price }} ₽
+- Способ доставки: {{ 'Курьерская доставка' if order.shipping_method == 'courier' else 'Самовывоз' if order.shipping_method == 'pickup' else order.shipping_method }}
+- Адрес доставки: {{ order.shipping_address }}
+
+Вы можете просмотреть детали заказа по следующей ссылке:
+http://localhost:5000{{ url_for('auth.order_detail', order_id=order.id) }}
+
+Если у вас возникли вопросы, пожалуйста, свяжитесь с нашей службой поддержки.
+
+С уважением,
+Команда TBMP
+
+Это автоматическое сообщение, пожалуйста, не отвечайте на него.
+© 2023 TBMP. Все права защищены.

@@ -1,0 +1,606 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Категория {{ category.name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .filters-sidebar {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .filters-sidebar h4, .filters-sidebar h5 {
+        font-weight: 600;
+    }
+    
+    .brand-filter {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    
+    .brand-filter .form-check {
+        margin-bottom: 0.25rem;
+    }
+    
+    .price-slider {
+        padding: 0.5rem 0;
+    }
+    
+    .memory-filter .btn-group-vertical {
+        width: 100%;
+    }
+    
+    .memory-filter .btn-outline-secondary {
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    
+    .product-img-container {
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    .product-img {
+        max-height: 100%;
+        object-fit: contain;
+    }
+    
+    /* Style for active filters */    .active-filter {
+        background-color: #e3f2fd;
+        border-radius: 4px;
+    }
+    
+    /* Стили для активных/выбранных фильтров */
+    .form-check-input:checked + .form-check-label {
+        font-weight: 500;
+        color: #0d6efd;
+    }
+    
+    .btn-check:checked + .btn-outline-secondary {
+        background-color: #e3f2fd;
+        color: #0d6efd;
+        border-color: #0d6efd;
+    }
+    
+    /* Стилизация ползунка цены */
+    .price-slider .form-range::-webkit-slider-thumb {
+        background: #0d6efd;
+    }
+    
+    .price-slider .form-range::-moz-range-thumb {
+        background: #0d6efd;
+    }
+    
+    /* Для мобильных устройств */
+    @media (max-width: 768px) {
+        .filters-sidebar {
+            margin-bottom: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('catalog.index') }}">Каталог</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+    </ol>
+</nav>
+
+<h1 class="mb-4">{{ category.name }}</h1>
+<p class="lead mb-4">{{ category.description }}</p>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <!-- Фильтры -->
+        <div class="filters-sidebar">
+            <form id="filterForm" action="{{ url_for('catalog.category', category_id=category.id) }}" method="get">
+                <h4 class="text-primary mb-3">Фильтры</h4>
+                
+                <!-- Фильтр по бренду -->
+                <div class="mb-4">
+                    <h5 class="text-primary">Бренд</h5>
+                    <div class="brand-filter">
+                        {% for brand, count in brands.items() %}
+                        <div class="form-check">                            <input class="form-check-input filter-check" type="checkbox" name="brand" value="{{ brand }}" id="brand_{{ brand }}" 
+                                  {% if selected_brands and brand in selected_brands %}checked{% endif %}>
+                            <label class="form-check-label d-flex justify-content-between align-items-center" for="brand_{{ brand }}">
+                                {{ brand }}
+                                <span class="badge bg-light text-dark rounded-pill">{{ count }}</span>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if brands|length > 5 %}
+                        <button type="button" class="btn btn-sm btn-link p-0" id="showAllBrands">Показать все</button>
+                    {% endif %}
+                </div>                <!-- Фильтр по цене -->
+                <div class="mb-4">
+                    <h5 class="text-primary">Цена</h5>
+                    <div class="price-filter">
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">от</span>
+                                    <input type="number" class="form-control" id="min_price" name="min_price" placeholder="0" value="{{ min_price }}" min="{{ min_category_price }}" max="{{ max_category_price }}">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">до</span>
+                                    <input type="number" class="form-control" id="max_price" name="max_price" placeholder="{{ max_category_price }}" value="{{ max_price }}" min="{{ min_category_price }}" max="{{ max_category_price }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="price-slider mb-3">
+                            <div class="position-relative">
+                                <input type="range" class="form-range" min="{{ min_category_price }}" max="{{ max_category_price }}" step="100" id="priceRange">
+                                <div class="range-labels d-flex justify-content-between mt-1">
+                                    <small class="text-muted">{{ min_category_price|round|int }} ₽</small>
+                                    <small class="text-muted">{{ max_category_price|round|int }} ₽</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% if (min_price != min_category_price) or (max_price != max_category_price) %}
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary w-100 reset-price-filter">Сбросить фильтр цены</button>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                  <!-- Фильтр по памяти (для смартфонов и планшетов) -->
+                {% if category.name == 'Смартфоны' or category.name == 'Планшеты' %}
+                <div class="mb-4">
+                    <h5 class="text-primary">Память</h5>
+                    <div class="memory-filter">
+                        <div class="btn-group-vertical w-100" role="group">
+                            {% if memory_options %}
+                                {% for memory in memory_options %}
+                                <input type="radio" class="btn-check filter-radio" name="memory" id="memory_{{ memory }}" value="{{ memory }}" 
+                                      {% if selected_memory == memory %}checked{% endif %} autocomplete="off">
+                                <label class="btn btn-outline-secondary" for="memory_{{ memory }}">
+                                    {% if memory < 1000 %}
+                                        {{ memory }} ГБ
+                                    {% else %}
+                                        {{ memory // 1000 }} ТБ
+                                    {% endif %}
+                                </label>
+                                {% endfor %}
+                            {% else %}
+                                <!-- Стандартные опции, если нет данных -->
+                                <input type="radio" class="btn-check filter-radio" name="memory" id="memory_64" value="64" 
+                                      {% if selected_memory == 64 %}checked{% endif %} autocomplete="off">
+                                <label class="btn btn-outline-secondary" for="memory_64">64 ГБ</label>
+                                
+                                <input type="radio" class="btn-check filter-radio" name="memory" id="memory_128" value="128" 
+                                      {% if selected_memory == 128 %}checked{% endif %} autocomplete="off">
+                                <label class="btn btn-outline-secondary" for="memory_128">128 ГБ</label>
+                                
+                                <input type="radio" class="btn-check filter-radio" name="memory" id="memory_256" value="256" 
+                                      {% if selected_memory == 256 %}checked{% endif %} autocomplete="off">
+                                <label class="btn btn-outline-secondary" for="memory_256">256 ГБ</label>
+                            {% endif %}
+                            
+                            <!-- Кнопка для сброса фильтра памяти -->
+                            {% if selected_memory %}
+                            <div class="mt-2">
+                                <a href="#" class="btn btn-sm btn-outline-secondary w-100 clear-memory-filter">Сбросить</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Фильтр по наличию -->
+                <div class="mb-4">
+                    <h5 class="text-primary">Наличие</h5>
+                    <div class="form-check">
+                        <input class="form-check-input filter-check" type="checkbox" name="availability" value="in_stock" id="availability_in_stock"
+                               {% if request.args.get('availability') == 'in_stock' %}checked{% endif %}>
+                        <label class="form-check-label" for="availability_in_stock">
+                            В наличии
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Кнопки управления фильтрами -->
+                <div class="d-flex flex-column gap-2 mb-4">
+                    <button type="submit" class="btn btn-primary">Применить фильтры</button>
+                    <a href="{{ url_for('catalog.category', category_id=category.id) }}" class="btn btn-outline-secondary">Сбросить фильтры</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="col-md-9">
+        <!-- Сортировка -->        <!-- Строка с активными фильтрами -->
+        {% set active_filters = [] %}
+        {% if selected_brands %}
+            {% for brand in selected_brands %}
+                {% set active_filters = active_filters + [{'name': 'Бренд: ' ~ brand, 'param': 'brand', 'value': brand}] %}
+            {% endfor %}
+        {% endif %}
+        
+        {% if (min_price is defined and min_price != min_category_price) or (max_price is defined and max_price != max_category_price) %}
+            {% set active_filters = active_filters + [{'name': 'Цена: ' ~ min_price|round|int ~ ' - ' ~ max_price|round|int ~ ' ₽', 'param': 'price', 'value': ''}] %}
+        {% endif %}
+        
+        {% if selected_memory %}
+            {% set memory_display = (selected_memory ~ ' ГБ') if selected_memory < 1000 else ((selected_memory // 1000) ~ ' ТБ') %}
+            {% set active_filters = active_filters + [{'name': 'Память: ' ~ memory_display, 'param': 'memory', 'value': selected_memory}] %}
+        {% endif %}
+        
+        {% if request.args.get('availability') == 'in_stock' %}
+            {% set active_filters = active_filters + [{'name': 'В наличии', 'param': 'availability', 'value': 'in_stock'}] %}
+        {% endif %}
+        
+        {% if active_filters %}
+        <div class="active-filters mb-3">
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+                <span class="text-muted">Активные фильтры:</span>
+                {% for filter in active_filters %}
+                <span class="badge bg-primary d-flex align-items-center">
+                    {{ filter.name }}
+                    <a href="#" class="ms-2 text-white remove-filter" data-param="{{ filter.param }}" data-value="{{ filter.value }}">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </span>
+                {% endfor %}
+                {% if active_filters|length > 1 %}
+                <a href="{{ url_for('catalog.category', category_id=category.id) }}" class="btn btn-sm btn-outline-secondary">
+                    Сбросить все
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Сортировка -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <label class="input-group-text" for="sortSelect">Сортировка</label>
+                    <select class="form-select" id="sortSelect" name="sort">
+                        <option value="popularity" {% if request.args.get('sort') == 'popularity' or not request.args.get('sort') %}selected{% endif %}>По популярности</option>
+                        <option value="price_asc" {% if request.args.get('sort') == 'price_asc' %}selected{% endif %}>По возрастанию цены</option>
+                        <option value="price_desc" {% if request.args.get('sort') == 'price_desc' %}selected{% endif %}>По убыванию цены</option>
+                        <option value="name_asc" {% if request.args.get('sort') == 'name_asc' %}selected{% endif %}>По названию (А-Я)</option>
+                        <option value="name_desc" {% if request.args.get('sort') == 'name_desc' %}selected{% endif %}>По названию (Я-А)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 text-end">
+                <p class="mb-0 pt-2">Найдено: <strong>{{ products.total }}</strong> товаров</p>
+            </div>
+        </div>
+
+{% if products.items %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        {% for product in products.items %}
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <div class="product-img-container">
+                        {% if product.image %}
+                        <img src="{{ url_for('static', filename='img/products/' + product.image) }}" class="card-img-top product-img" alt="{{ product.name }}">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='img/no-image.png') }}" class="card-img-top product-img" alt="No image available">
+                        {% endif %}
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text mb-2">{{ product.description[:60] }}...</p>
+                        <div class="mt-auto">
+                            <p class="text-primary fw-bold mb-2">{{ product.price|round|int }} ₽</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ url_for('catalog.product_detail', product_id=product.id) }}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                                <form action="{{ url_for('cart.add_to_cart', product_id=product.id) }}" method="post">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% if product.stock > 0 %}
+                        <div class="badge bg-success position-absolute top-0 end-0 m-2">В наличии</div>
+                    {% else %}
+                        <div class="badge bg-secondary position-absolute top-0 end-0 m-2">Нет в наличии</div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if products.pages > 1 %}
+        <nav aria-label="Product pagination" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if products.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link preserve-params" href="{{ url_for('catalog.category', category_id=category.id, page=products.prev_num) }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">&laquo;</span>
+                    </li>
+                {% endif %}
+
+                {% for page_num in products.iter_pages(left_edge=2, right_edge=2, left_current=1, right_current=2) %}
+                    {% if page_num %}
+                        {% if page_num == products.page %}
+                            <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link preserve-params" href="{{ url_for('catalog.category', category_id=category.id, page=page_num) }}">{{ page_num }}</a></li>
+                        {% endif %}
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if products.has_next %}
+                    <li class="page-item">
+                        <a class="page-link preserve-params" href="{{ url_for('catalog.category', category_id=category.id, page=products.next_num) }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">&raquo;</span>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% else %}
+    <div class="alert alert-info">
+        <h3>В этой категории пока нет товаров</h3>
+        <p>Пожалуйста, загляните позже или посмотрите другие категории.</p>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Сортировка товаров
+    const sortSelect = document.getElementById('sortSelect');
+    sortSelect.addEventListener('change', function() {
+        const url = new URL(window.location);
+        url.searchParams.set('sort', this.value);
+        window.location = url;
+    });
+      // Ценовой ползунок и фильтр
+    const priceRange = document.getElementById('priceRange');
+    const minPriceInput = document.getElementById('min_price');
+    const maxPriceInput = document.getElementById('max_price');
+    
+    if (priceRange && minPriceInput && maxPriceInput) {
+        const minPrice = parseInt(priceRange.min);
+        const maxPrice = parseInt(priceRange.max);
+        
+        // Устанавливаем начальное значение ползунка
+        // Для одного ползунка используем среднее значение
+        priceRange.value = (parseInt(minPriceInput.value) + parseInt(maxPriceInput.value)) / 2;
+        
+        // Обновляем положение ползунка при изменении полей ввода
+        function updateSlider() {
+            const minVal = parseInt(minPriceInput.value) || minPrice;
+            const maxVal = parseInt(maxPriceInput.value) || maxPrice;
+            
+            // Устанавливаем среднее значение для ползунка
+            priceRange.value = (minVal + maxVal) / 2;
+            
+            // Визуальное отображение диапазона (можно доработать через CSS)
+            const percent = (priceRange.value - minPrice) / (maxPrice - minPrice) * 100;
+            priceRange.style.background = 
+                `linear-gradient(to right, #e9ecef ${0}%, #0d6efd ${percent}%, #e9ecef ${100}%)`;
+        }
+        
+        // Настраиваем слушатели событий
+        priceRange.addEventListener('input', function() {
+            const position = (this.value - minPrice) / (maxPrice - minPrice);
+            const range = maxPrice - minPrice;
+            
+            // Регулируем оба значения в зависимости от положения
+            if (position <= 0.5) {
+                // Если ползунок в левой части, меняем максимальную цену
+                minPriceInput.value = minPrice;
+                maxPriceInput.value = Math.round(minPrice + position * 2 * range);
+            } else {
+                // Если ползунок в правой части, меняем минимальную цену
+                minPriceInput.value = Math.round(minPrice + (position - 0.5) * 2 * range);
+                maxPriceInput.value = maxPrice;
+            }
+            
+            updateSlider();
+        });
+        
+        // Обновляем ползунок при изменении полей ввода
+        minPriceInput.addEventListener('input', updateSlider);
+        maxPriceInput.addEventListener('input', updateSlider);
+        
+        // Отправляем форму при потере фокуса или нажатии Enter
+        minPriceInput.addEventListener('blur', submitFilterForm);
+        maxPriceInput.addEventListener('blur', submitFilterForm);
+        
+        minPriceInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitFilterForm();
+            }
+        });
+        
+        maxPriceInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitFilterForm();
+            }
+        });
+        
+        // Инициализация
+        updateSlider();
+    }
+    
+    // Показать/скрыть все бренды
+    const showAllBrandsBtn = document.getElementById('showAllBrands');
+    const brandsContainer = document.querySelector('.brand-filter');
+    
+    if (showAllBrandsBtn && brandsContainer) {
+        const brandItems = brandsContainer.querySelectorAll('.form-check');
+        
+        // Скрываем лишние бренды (если их больше 5)
+        if (brandItems.length > 5) {
+            for (let i = 5; i < brandItems.length; i++) {
+                brandItems[i].style.display = 'none';
+            }
+            
+            showAllBrandsBtn.addEventListener('click', function() {
+                for (let item of brandItems) {
+                    item.style.display = 'block';
+                }
+                this.style.display = 'none';
+            });
+        } else {
+            showAllBrandsBtn.style.display = 'none';
+        }
+    }
+    
+    // Авто-отправка формы при изменении чекбоксов или радиокнопок
+    const filterChecks = document.querySelectorAll('.filter-check');
+    filterChecks.forEach(check => {
+        check.addEventListener('change', function() {
+            submitFilterForm();
+        });
+    });
+    
+    const filterRadios = document.querySelectorAll('.filter-radio');
+    filterRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            submitFilterForm();
+        });
+    });
+      // Функция отправки формы фильтра
+    function submitFilterForm() {
+        const filterForm = document.getElementById('filterForm');
+        if (filterForm) {
+            filterForm.submit();
+        }
+    }
+      // Сброс фильтра памяти
+    const clearMemoryBtn = document.querySelector('.clear-memory-filter');
+    if (clearMemoryBtn) {
+        clearMemoryBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Снимаем выбор со всех кнопок памяти
+            const memoryInputs = document.querySelectorAll('input[name="memory"]');
+            memoryInputs.forEach(input => {
+                input.checked = false;
+            });
+            
+            // Удаляем параметр memory из URL
+            const url = new URL(window.location);
+            url.searchParams.delete('memory');
+            
+            window.location = url;
+        });
+    }
+    
+    // Сброс фильтра цены
+    const resetPriceBtn = document.querySelector('.reset-price-filter');
+    if (resetPriceBtn) {
+        resetPriceBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Получаем минимальные и максимальные значения из диапазона категории
+            const minCategoryPrice = parseInt(priceRange.min);
+            const maxCategoryPrice = parseInt(priceRange.max);
+            
+            // Устанавливаем поля ввода в минимальное/максимальное значение
+            minPriceInput.value = minCategoryPrice;
+            maxPriceInput.value = maxCategoryPrice;
+            
+            // Обновляем положение ползунка
+            updateSlider();
+            
+            // Удаляем параметры цены из URL и перегружаем страницу
+            const url = new URL(window.location);
+            url.searchParams.delete('min_price');
+            url.searchParams.delete('max_price');
+            
+            window.location = url;
+        });
+    }
+      // Обработка пагинации с сохранением фильтров
+    const paginationLinks = document.querySelectorAll('.pagination .page-link');
+    paginationLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const url = new URL(this.href);
+            const currentUrl = new URL(window.location);
+            
+            // Копируем все параметры фильтрации из текущего URL
+            for (const [key, value] of currentUrl.searchParams.entries()) {
+                if (key !== 'page') {
+                    url.searchParams.set(key, value);
+                }
+            }
+            
+            window.location = url;
+        });
+    });
+    
+    // Удаление активных фильтров по клику
+    const removeFilterBtns = document.querySelectorAll('.remove-filter');
+    removeFilterBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const param = this.dataset.param;
+            const value = this.dataset.value;
+            const url = new URL(window.location);
+            
+            if (param === 'price') {
+                // Для цены удаляем оба параметра
+                url.searchParams.delete('min_price');
+                url.searchParams.delete('max_price');
+            } else if (param === 'brand' && value) {
+                // Для бренда удаляем только конкретное значение
+                const brands = url.searchParams.getAll('brand');
+                url.searchParams.delete('brand');
+                
+                for (const brand of brands) {
+                    if (brand !== value) {
+                        url.searchParams.append('brand', brand);
+                    }
+                }
+            } else {
+                // Для остальных параметров просто удаляем
+                url.searchParams.delete(param);
+            }
+            
+            window.location = url;
+        });
+    });
+    
+    // Настройка стилей для фильтров
+    const filterSidebar = document.querySelector('.filters-sidebar');
+    if (filterSidebar) {
+        filterSidebar.style.backgroundColor = '#f8f9fa';
+        filterSidebar.style.padding = '15px';
+        filterSidebar.style.borderRadius = '8px';
+        filterSidebar.style.marginBottom = '20px';
+    }
+});
+</script>
+{% endblock %}

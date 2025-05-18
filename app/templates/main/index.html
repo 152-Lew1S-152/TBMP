@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Главная{% endblock %}
+
+{% block content %}
+<div class="hero-section position-relative mb-5">
+    <div id="carouselHero" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselHero" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselHero" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselHero" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="bg-primary text-white p-5" style="height: 400px;">
+                    <div class="container h-100 d-flex flex-column justify-content-center">                        <h1>Тариф Безлимит</h1>
+                        <p class="lead">Безлимитный интернет, звонки и SMS для всей семьи</p>
+                        <a href="{{ url_for('tariffs.tariff_detail', tariff_id=3) }}" class="btn btn-light btn-lg mt-3">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="bg-primary text-white p-5" style="height: 400px;">
+                    <div class="container h-100 d-flex flex-column justify-content-center">
+                        <h1>iPhone 15 в рассрочку</h1>
+                        <p class="lead">0% первый взнос, 0% переплата</p>
+                        <a href="{{ url_for('catalog.product_detail', product_id=1) }}" class="btn btn-light btn-lg mt-3">Купить сейчас</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="bg-success text-white p-5" style="height: 400px;">
+                    <div class="container h-100 d-flex flex-column justify-content-center">
+                        <h1>Специальные предложения</h1>
+                        <p class="lead">Скидки до 50% на аксессуары при покупке смартфона</p>
+                        <a href="{{ url_for('catalog.sale') }}" class="btn btn-light btn-lg mt-3">Смотреть акции</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselHero" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselHero" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<div class="categories-section mb-5">
+    <h2 class="section-title mb-4">Категории товаров</h2>
+    <div class="row">
+        {% for category in categories %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">                <div class="card-body text-center">                    {% if category.name == 'Смартфоны' %}
+                        <img src="{{ url_for('static', filename='img/categories/smartphones.svg') }}" alt="Смартфоны" class="category-icon">
+                    {% elif category.name == 'Планшеты' %}
+                        <img src="{{ url_for('static', filename='img/categories/tablets.svg') }}" alt="Планшеты" class="category-icon">
+                    {% elif category.name == 'Ноутбуки' %}
+                        <img src="{{ url_for('static', filename='img/categories/laptops.svg') }}" alt="Ноутбуки" class="category-icon">
+                    {% elif category.name == 'Аксессуары' %}
+                        <img src="{{ url_for('static', filename='img/categories/accessories.svg') }}" alt="Аксессуары" class="category-icon">
+                    {% elif category.name == 'Умные устройства' %}
+                        <img src="{{ url_for('static', filename='img/categories/smart_devices.svg') }}" alt="Умные устройства" class="category-icon">
+                    {% else %}
+                        <i class="fas fa-mobile-alt fa-4x mb-3 text-primary"></i>
+                    {% endif %}
+                    <h3 class="card-title">{{ category.name }}</h3>
+                    <p class="card-text">{{ category.description }}</p>
+                    <a href="{{ url_for('catalog.category', category_id=category.id) }}" class="btn btn-outline-success">Перейти</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="featured-products mb-5">
+    <h2 class="section-title mb-4">Популярные товары</h2>
+    <div class="row">
+        {% for product in featured_products %}
+        <div class="col-md-4 col-lg-2 mb-4">
+            <div class="card h-100">
+                <div class="product-img-container">
+                    {% if product.image %}
+                    <img src="{{ url_for('static', filename='img/products/' + product.image) }}" class="card-img-top product-img" alt="{{ product.name }}">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='img/no-image.png') }}" class="card-img-top product-img" alt="No image available">
+                    {% endif %}
+                </div>
+                <div class="card-body d-flex flex-column">                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text text-primary fw-bold mb-2">{{ product.price|round|int }} ₽</p>
+                    <a href="{{ url_for('catalog.product_detail', product_id=product.id) }}" class="btn btn-sm btn-outline-success mt-auto">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>    <div class="text-center mt-4">
+        <a href="{{ url_for('catalog.index') }}" class="btn btn-primary">Перейти в каталог</a>
+    </div>
+</div>    <div class="tariffs-section mb-5">
+    <h2 class="section-title mb-4">Наши тарифы</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="my-0 fw-normal">Лайт</h3>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">300 ₽<small class="text-muted fw-light">/мес.</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">                        <li><i class="fas fa-check text-success me-2"></i>15 ГБ интернета</li>
+                        <li><i class="fas fa-check text-success me-2"></i>200 минут связи</li>
+                        <li><i class="fas fa-check text-success me-2"></i>30 SMS</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Безлимитные мессенджеры</li>
+                    </ul>
+                    <a href="{{ url_for('tariffs.tariff_detail', tariff_id=1) }}" class="w-100 btn btn-lg btn-outline-primary">Подключить</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="my-0 fw-normal">Оптима</h3>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">450 ₽<small class="text-muted fw-light">/мес.</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li><i class="fas fa-check text-success me-2"></i>30 ГБ интернета</li>
+                        <li><i class="fas fa-check text-success me-2"></i>500 минут связи</li>
+                        <li><i class="fas fa-check text-success me-2"></i>50 SMS</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Безлимитные соцсети</li>
+                    </ul>
+                    <a href="{{ url_for('tariffs.tariff_detail', tariff_id=2) }}" class="w-100 btn btn-lg btn-outline-primary">Подключить</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-success">
+                <div class="card-header bg-success text-white">
+                    <h3 class="my-0 fw-normal">Безлимит</h3>
+                </div>                <div class="card-body">
+                    <span class="badge bg-success position-absolute top-0 end-0 mt-2 me-2">Популярный</span>
+                    <h1 class="card-title pricing-card-title">650 ₽<small class="text-muted fw-light">/мес.</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">                        <li><i class="fas fa-check text-success me-2"></i>Безлимитный интернет</li>
+                        <li><i class="fas fa-check text-success me-2"></i>1000 минут связи</li>
+                        <li><i class="fas fa-check text-success me-2"></i>100 SMS</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Безлимитные соцсети и YouTube</li>
+                    </ul>
+                    <a href="{{ url_for('tariffs.tariff_detail', tariff_id=3) }}" class="w-100 btn btn-lg btn-success">Подключить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <a href="{{ url_for('tariffs.index') }}" class="btn btn-primary">Посмотреть все тарифы</a>
+    </div>
+</div>
+
+<div class="advantages-section mb-5">
+    <h2 class="section-title mb-4">Почему выбирают нас</h2>
+    <div class="row">
+        <div class="col-md-3 mb-4 text-center">
+            <div class="advantage-icon mb-3">
+                <i class="fas fa-signal fa-3x text-primary"></i>
+            </div>
+            <h4>Лучшее покрытие</h4>
+            <p>Связь доступна более чем в 2000 городов России</p>
+        </div>
+        <div class="col-md-3 mb-4 text-center">
+            <div class="advantage-icon mb-3">
+                <i class="fas fa-shield-alt fa-3x text-primary"></i>
+            </div>
+            <h4>Безопасность</h4>
+            <p>Защита личных данных и устойчивость к сбоям</p>
+        </div>
+        <div class="col-md-3 mb-4 text-center">
+            <div class="advantage-icon mb-3">
+                <i class="fas fa-user-friends fa-3x text-success"></i>
+            </div>
+            <h4>Поддержка 24/7</h4>
+            <p>Круглосуточная поддержка клиентов</p>
+        </div>
+        <div class="col-md-3 mb-4 text-center">
+            <div class="advantage-icon mb-3">
+                <i class="fas fa-medal fa-3x text-primary"></i>
+            </div>
+            <h4>Бонусная программа</h4>
+            <p>Копите баллы и обменивайте их на привилегии</p>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

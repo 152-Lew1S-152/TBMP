@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block title %}Услуги связи{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('tariffs.index') }}">Тарифы</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Услуги</li>
+    </ol>
+</nav>
+
+<h1 class="mb-4">Дополнительные услуги связи</h1>
+<p class="lead mb-4">Расширьте возможности вашего тарифа с нашими дополнительными услугами</p>
+
+<div class="services-categories mb-5">
+    <ul class="nav nav-pills mb-4" id="servicesTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link {% if selected_category == 'all' %}active{% endif %}" href="{{ url_for('tariffs.services', category='all') }}">Все услуги</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link {% if selected_category == 'internet' %}active{% endif %}" href="{{ url_for('tariffs.services', category='internet') }}">Интернет</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link {% if selected_category == 'calls' %}active{% endif %}" href="{{ url_for('tariffs.services', category='calls') }}">Звонки</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link {% if selected_category == 'security' %}active{% endif %}" href="{{ url_for('tariffs.services', category='security') }}">Безопасность</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="servicesTabsContent">
+        <div class="tab-pane fade show active" id="filtered-services" role="tabpanel">
+            <div class="row">
+                {% if services %}
+                    {% for service in services %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ service.name }}</h4>
+                                <p class="card-text">{{ service.description }}</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="text-danger fw-bold">{{ service.price|round|int }} ₽/{{ service.duration }}</span>
+                                    <a href="{{ url_for('tariffs.service_detail', service_id=service.id) }}" class="btn btn-outline-danger">Подключить</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12 text-center py-5">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            В этой категории пока нет доступных услуг.
+                        </div>
+                        <a href="{{ url_for('tariffs.services') }}" class="btn btn-outline-danger mt-3">
+                            <i class="fas fa-undo me-2"></i>Показать все услуги
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="services-bundles mb-5">
+    <h2 class="section-title mb-4">Популярные комплекты услуг</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Интернет-пакет</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Безлимит на соцсети
+                            <span class="badge bg-danger rounded-pill">150 ₽</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Безлимит на YouTube
+                            <span class="badge bg-danger rounded-pill">250 ₽</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            +5 ГБ интернета
+                            <span class="badge bg-danger rounded-pill">200 ₽</span>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="mb-0"><del class="text-muted">600 ₽/мес</del></p>
+                            <h5 class="text-danger">450 ₽/мес</h5>
+                        </div>
+                        <button class="btn btn-danger">Подключить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Защита</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Защита от спама
+                            <span class="badge bg-danger rounded-pill">60 ₽</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Родительский контроль
+                            <span class="badge bg-danger rounded-pill">100 ₽</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Антивирус
+                            <span class="badge bg-danger rounded-pill">99 ₽</span>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="mb-0"><del class="text-muted">259 ₽/мес</del></p>
+                            <h5 class="text-danger">200 ₽/мес</h5>
+                        </div>
+                        <button class="btn btn-danger">Подключить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Максимум</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Безлимит на соцсети
+                            <span class="badge bg-danger rounded-pill">150 ₽</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            +100 минут
+                            <span class="badge bg-danger rounded-pill">100 ₽</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Защита от спама
+                            <span class="badge bg-danger rounded-pill">60 ₽</span>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="mb-0"><del class="text-muted">310 ₽/мес</del></p>
+                            <h5 class="text-danger">250 ₽/мес</h5>
+                        </div>
+                        <button class="btn btn-danger">Подключить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="how-to-connect mb-5">
+    <h2 class="section-title mb-4">Как подключить услуги</h2>
+    <div class="row">
+        <div class="col-md-3 mb-4 text-center">
+            <div class="step-icon mb-3">
+                <i class="fas fa-mobile-alt fa-3x text-danger"></i>
+            </div>
+            <h5>Через приложение</h5>
+            <p>Скачайте наше мобильное приложение и подключайте услуги в разделе «Тарифы и услуги»</p>
+        </div>
+        <div class="col-md-3 mb-4 text-center">
+            <div class="step-icon mb-3">
+                <i class="fas fa-laptop fa-3x text-danger"></i>
+            </div>
+            <h5>Через личный кабинет</h5>
+            <p>Войдите в личный кабинет на нашем сайте и перейдите в раздел «Услуги»</p>
+        </div>
+        <div class="col-md-3 mb-4 text-center">
+            <div class="step-icon mb-3">
+                <i class="fas fa-phone-alt fa-3x text-danger"></i>
+            </div>
+            <h5>По телефону</h5>
+            <p>Позвоните по номеру 0890 (бесплатно для наших абонентов)</p>
+        </div>
+        <div class="col-md-3 mb-4 text-center">
+            <div class="step-icon mb-3">
+                <i class="fas fa-store fa-3x text-danger"></i>
+            </div>
+            <h5>В нашем офисе</h5>
+            <p>Посетите ближайший салон-магазин для консультации и подключения</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,151 @@
+/* Дополнительные стили для градиентной темы */
+
+/* Карточки товаров */
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background: var(--main-gradient);
+    color: white;
+    font-weight: 500;
+    border: none;
+}
+
+.card-footer {
+    background: rgba(0, 102, 204, 0.05);
+    border-top: 1px solid rgba(0, 153, 77, 0.2);
+}
+
+/* Тарифные планы */
+.tariff-card {
+    border-top: 4px solid transparent;
+    border-image: var(--main-gradient);
+    border-image-slice: 1;
+    transition: all 0.3s;
+}
+
+.tariff-card:hover {
+    transform: scale(1.02);
+}
+
+/* Градиентный текст для важных элементов */
+.gradient-text {
+    background: linear-gradient(90deg, var(--blue-color), var(--green-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Бейджи */
+.badge-gradient {
+    background: var(--main-gradient);
+    color: white;
+}
+
+/* Оповещения и уведомления */
+.alert-danger {
+    color: var(--blue-color);
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.05), rgba(0, 153, 77, 0.05));
+    border-left: 4px solid transparent;
+    border-image: var(--main-gradient);
+    border-image-slice: 1;
+}
+
+.alert-danger .alert-link {
+    color: var(--green-color);
+}
+
+.btn-danger {
+    background: var(--main-gradient);
+    border: none;
+}
+
+.btn-danger:hover {
+    background: var(--main-gradient-hover);
+    border: none;
+}
+
+.btn-outline-danger {
+    border: 1px solid var(--blue-color);
+    color: var(--blue-color);
+}
+
+.btn-outline-danger:hover {
+    background: var(--main-gradient);
+    color: white;
+    border-color: transparent;
+}
+
+/* Пагинация */
+.page-item.active .page-link {
+    background: var(--main-gradient);
+    border-color: var(--blue-color);
+}
+
+/* Навигация по вкладкам */
+.nav-tabs .nav-link.active {
+    border-top: 3px solid transparent;
+    border-image: var(--main-gradient);
+    border-image-slice: 1;
+    border-left: none;
+    border-right: none;
+    font-weight: bold;
+    color: var(--blue-color);
+}
+
+/* Прогресс-бар */
+.progress-bar {
+    background: var(--main-gradient);
+}
+
+/* Таблицы */
+.table-hover tbody tr:hover {
+    background: linear-gradient(90deg, rgba(0, 102, 204, 0.05), rgba(0, 153, 77, 0.05));
+}
+
+/* Кнопка возврата наверх */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-gradient);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+}
+
+/* Акцентные границы */
+.border-accent {
+    border: 2px solid transparent;
+    border-image: var(--main-gradient);
+    border-image-slice: 1;
+}
+
+/* Хлебные крошки */
+.breadcrumb-item.active {
+    color: var(--green-color);
+}

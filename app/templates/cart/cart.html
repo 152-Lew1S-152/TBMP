@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Корзина{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Корзина</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">Корзина</h1>
+
+    {% if items %}
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Товары в корзине</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Товар</th>
+                                <th>Цена</th>
+                                <th>Количество</th>
+                                <th>Сумма</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-3">
+                                                {% if item.product.image %}
+                                                    <img src="{{ url_for('static', filename='img/products/' + item.product.image) }}" alt="{{ item.product.name }}" width="50">
+                                                {% else %}
+                                                    <img src="{{ url_for('static', filename='img/no-image.png') }}" alt="Нет изображения" width="50">
+                                                {% endif %}
+                                            </div>
+                                            <div>
+                                                <a href="{{ url_for('catalog.product_detail', product_id=item.product.id) }}">{{ item.product.name }}</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ item.product.price }} ₽</td>
+                                    <td>                                        <form action="{% if item.id is defined %}{{ url_for('cart.update_cart', item_id=item.id) }}{% else %}{{ url_for('cart.update_cart_session', product_id=item.product.id) }}{% endif %}" method="post" class="quantity-form">
+                                            <div class="input-group input-group-sm" style="width: 120px;">
+                                                <button type="button" class="btn btn-outline-secondary btn-sm decrease-btn"><i class="fas fa-minus"></i></button>
+                                                <input type="number" class="form-control form-control-sm text-center quantity-input" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}">
+                                                <button type="button" class="btn btn-outline-secondary btn-sm increase-btn"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td>{{ item.subtotal }} ₽</td>
+                                    <td>                                        <form action="{% if item.id is defined %}{{ url_for('cart.remove_from_cart', item_id=item.id) }}{% else %}{{ url_for('cart.remove_from_cart_session', product_id=item.product.id) }}{% endif %}" method="post">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-end">Итого:</td>
+                                <td><strong>{{ total }} ₽</strong></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between flex-wrap">
+                    <div class="d-flex align-items-center mb-2 mb-md-0">
+                        <form action="{{ url_for('cart.apply_promo') }}" method="post">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Промокод" name="promo_code">
+                                <button type="submit" class="btn btn-outline-secondary">Применить</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="d-flex flex-column align-items-end">
+                        <span class="text-muted mb-2">Итоговая сумма: <strong class="text-danger">{{ total }} ₽</strong></span>
+                        {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('cart.checkout') }}" class="btn btn-success">Перейти к оформлению</a>
+                        {% else %}
+                            <p class="mb-2 text-muted">Для оформления заказа необходимо авторизоваться</p>
+                            <div>
+                                <a href="{{ url_for('auth.login', next=url_for('cart.checkout')) }}" class="btn btn-primary">Войти и оформить</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">            <div class="card-header bg-light">
+                <h5 class="mb-0">Преимущества покупки у нас</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 col-6 text-center mb-3">
+                        <i class="fas fa-truck fa-2x text-danger mb-2"></i>
+                        <h6>Быстрая доставка</h6>
+                        <p class="small text-muted">Курьером или в пункт выдачи</p>
+                    </div>
+                    <div class="col-md-3 col-6 text-center mb-3">
+                        <i class="fas fa-shield-alt fa-2x text-danger mb-2"></i>
+                        <h6>Гарантия качества</h6>
+                        <p class="small text-muted">Официальная гарантия</p>
+                    </div>
+                    <div class="col-md-3 col-6 text-center mb-3">
+                        <i class="fas fa-credit-card fa-2x text-danger mb-2"></i>
+                        <h6>Удобная оплата</h6>
+                        <p class="small text-muted">Наличными или картой</p>
+                    </div>
+                    <div class="col-md-3 col-6 text-center mb-3">
+                        <i class="fas fa-undo fa-2x text-danger mb-2"></i>
+                        <h6>Возврат 14 дней</h6>
+                        <p class="small text-muted">Без объяснения причин</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-shopping-cart fa-5x text-muted mb-3"></i>
+            <h2 class="mb-3">Ваша корзина пуста</h2>
+            <p class="lead mb-4">Добавьте товары из каталога, чтобы оформить заказ</p>            <a href="{{ url_for('catalog.index') }}" class="btn btn-primary btn-lg">Перейти в каталог</a>
+        </div>
+        
+        <div class="mt-5">
+            <h3 class="text-center mb-4">Рекомендуемые товары</h3>
+            <div class="row">
+                {% for i in range(4) %}
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="card h-100">
+                            <img src="{{ url_for('static', filename='img/no-image.png') }}" class="card-img-top" alt="Товар">
+                            <div class="card-body">
+                                <h5 class="card-title">Смартфон</h5>
+                                <p class="card-text text-primary fw-bold">от 12 990 ₽</p>
+                                <a href="{{ url_for('catalog.index') }}" class="btn btn-outline-success btn-sm">В каталог</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Обработка изменения количества
+    const quantityForms = document.querySelectorAll('.quantity-form');
+    
+    quantityForms.forEach(form => {
+        const decreaseBtn = form.querySelector('.decrease-btn');
+        const increaseBtn = form.querySelector('.increase-btn');
+        const input = form.querySelector('.quantity-input');
+        
+        decreaseBtn.addEventListener('click', () => {
+            if (input.value > 1) {
+                input.value = parseInt(input.value) - 1;
+                form.submit();
+            }
+        });
+        
+        increaseBtn.addEventListener('click', () => {
+            if (input.value < parseInt(input.max)) {
+                input.value = parseInt(input.value) + 1;
+                form.submit();
+            }
+        });
+        
+        input.addEventListener('change', () => {
+            form.submit();
+        });
+    });
+});
+</script>
+{% endblock %}

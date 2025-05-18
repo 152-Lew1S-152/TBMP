@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Мои тарифы{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('tariffs.index') }}">Тарифы</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Мои тарифы</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">Мои тарифы</h1>
+            
+            {% if not subscriptions %}
+            <div class="alert alert-info">
+                <p>У вас пока нет подключенных тарифов или заявок на подключение.</p>
+                <a href="{{ url_for('tariffs.index') }}" class="btn btn-primary mt-2">Перейти к выбору тарифов</a>
+            </div>
+            {% else %}
+            
+            <!-- Активные тарифы -->
+            {% set active_subscriptions = subscriptions|selectattr('status', 'equalto', 'active')|list %}
+            {% if active_subscriptions %}
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Активные тарифы</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for subscription in active_subscriptions %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 tariff-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ subscription.tariff.name }}</h5>
+                                    <p class="text-primary fw-bold">{{ subscription.tariff.price }} ₽/{{ subscription.tariff.period }}</p>
+                                    
+                                    {% if subscription.tariff.description %}
+                                    <p class="card-text">{{ subscription.tariff.description|truncate(100) }}</p>
+                                    {% endif %}
+                                    
+                                    <div class="mt-3">
+                                        <p class="mb-1"><small>Активирован: {{ subscription.activated_at.strftime('%d.%m.%Y') }}</small></p>
+                                        <p class="mb-1"><small>Действует до: {{ subscription.expires_at.strftime('%d.%m.%Y') }}</small></p>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent">
+                                    <a href="{{ url_for('tariffs.tariff_detail', tariff_id=subscription.tariff.id) }}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Ожидающие подключения тарифы -->
+            {% set pending_subscriptions = subscriptions|selectattr('status', 'equalto', 'pending')|list %}
+            {% if pending_subscriptions %}
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-warning">Ожидающие подключения</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for subscription in pending_subscriptions %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 tariff-card border-warning">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ subscription.tariff.name }}</h5>
+                                    <p class="text-primary fw-bold">{{ subscription.tariff.price }} ₽/{{ subscription.tariff.period }}</p>
+                                    
+                                    {% if subscription.tariff.description %}
+                                    <p class="card-text">{{ subscription.tariff.description|truncate(100) }}</p>
+                                    {% endif %}
+                                    
+                                    <div class="mt-3">
+                                        <p class="mb-1"><span class="badge bg-warning text-dark">Ожидает подтверждения</span></p>
+                                        <p class="mb-1"><small>Заявка создана: {{ subscription.created_at.strftime('%d.%m.%Y %H:%M') }}</small></p>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent">
+                                    <a href="{{ url_for('tariffs.tariff_detail', tariff_id=subscription.tariff.id) }}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Отмененные и истекшие тарифы -->
+            {% set other_subscriptions = subscriptions|selectattr('status', 'ne', 'active')|selectattr('status', 'ne', 'pending')|list %}
+            {% if other_subscriptions %}
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-secondary">История подключений</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Тариф</th>
+                                    <th>Стоимость</th>
+                                    <th>Статус</th>
+                                    <th>Дата заявки</th>
+                                    <th>Комментарий</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for subscription in other_subscriptions %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ url_for('tariffs.tariff_detail', tariff_id=subscription.tariff.id) }}">
+                                            {{ subscription.tariff.name }}
+                                        </a>
+                                    </td>
+                                    <td>{{ subscription.tariff.price }} ₽/{{ subscription.tariff.period }}</td>
+                                    <td>
+                                        {% if subscription.status == 'cancelled' %}
+                                        <span class="badge bg-danger">Отменен</span>
+                                        {% elif subscription.status == 'expired' %}
+                                        <span class="badge bg-secondary">Истек срок</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ subscription.created_at.strftime('%d.%m.%Y') }}</td>
+                                    <td>{{ subscription.admin_comment or '-' }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

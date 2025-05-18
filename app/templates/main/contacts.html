@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Контакты{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Контакты</li>
+    </ol>
+</nav>
+
+<h1 class="mb-4">Контактная информация</h1>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="card-title h4 mb-3">Связаться с нами</h2>
+                
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Ваше имя</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Телефон</label>
+                        <input type="tel" class="form-control" id="phone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="topic" class="form-label">Тема обращения</label>
+                        <select class="form-select" id="topic">
+                            <option value="" selected>Выберите тему</option>
+                            <option value="question">Вопрос по услугам</option>
+                            <option value="order">Заказ</option>
+                            <option value="complaint">Жалоба</option>
+                            <option value="proposal">Предложение</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Сообщение</label>
+                        <textarea class="form-control" id="message" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="agreement" required>
+                        <label class="form-check-label" for="agreement">Я согласен на обработку персональных данных</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="card-title h4 mb-3">Контактная информация</h2>
+                
+                <div class="d-flex mb-3">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-phone fa-2x text-danger"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="mb-1">Телефон</h5>
+                        <p class="mb-0">8 800 250 0890 (бесплатно по России)<br>+7 495 766 0166 (для звонков из-за рубежа)</p>
+                    </div>
+                </div>
+                
+                <div class="d-flex mb-3">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-envelope fa-2x text-danger"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="mb-1">Email</h5>
+                        <p class="mb-0">info@mts.ru</p>
+                    </div>
+                </div>
+                
+                <div class="d-flex mb-3">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-map-marker-alt fa-2x text-danger"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="mb-1">Главный офис</h5>
+                        <p class="mb-0">Россия, 109147, г. Москва, ул. Марксистская, д. 4</p>
+                    </div>
+                </div>
+                
+                <div class="d-flex mb-3">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-clock fa-2x text-danger"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="mb-1">Часы работы</h5>
+                        <p class="mb-0">Пн-Пт: 9:00 - 18:00<br>Сб-Вс: выходной</p>
+                    </div>
+                </div>
+                
+                <h5 class="mt-4 mb-3">Мы в социальных сетях</h5>
+                <div class="social-links">
+                    <a href="#" class="btn btn-outline-danger me-2 mb-2"><i class="fab fa-vk"></i> ВКонтакте</a>
+                    <a href="#" class="btn btn-outline-danger me-2 mb-2"><i class="fab fa-telegram"></i> Телеграм</a>
+                    <a href="#" class="btn btn-outline-danger me-2 mb-2"><i class="fab fa-youtube"></i> YouTube</a>
+                    <a href="#" class="btn btn-outline-danger me-2 mb-2"><i class="fab fa-instagram"></i> Instagram</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="mb-3 mt-3">Наши офисы</h2>
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="ratio ratio-21x9">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.5584081503307!2d37.659099716266695!3d55.73851998054785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54aca1a5b396f%3A0x5e1c35c350ddc307!2z0JzQsNGA0LrRgdC40YHRgtGB0LrQsNGPINGD0LsuLCA0LCDQnNC-0YHQutCy0LAsINCg0L7RgdGB0LjRjywgMTA5MTQ3!5e0!3m2!1sru!2sus!4v1620301234567!5m2!1sru!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</div>
+
+<h2 class="mb-3">Часто задаваемые вопросы</h2>
+<div class="accordion" id="faqAccordion">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Как подключить тариф?
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">                Вы можете подключить тариф несколькими способами:                <ul>
+                    <li>В любом офисе TBMP</li>
+                    <li>На сайте в личном кабинете</li>
+                    <li>Через мобильное приложение TBMP</li>
+                    <li>Позвонив в службу поддержки по номеру 8 800 250 0890</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Как оплатить услуги TBMP?
+            </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">            <div class="accordion-body">                Оплатить услуги TBMP можно:
+                <ul>
+                    <li>В личном кабинете на сайте или в приложении TBMP</li>
+                    <li>В офисах TBMP</li>
+                    <li>Через терминалы оплаты</li>
+                    <li>В отделениях банков</li>
+                    <li>С помощью банковских карт online</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Как получить детализацию счета?
+            </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">                Детализацию счета можно получить:                <ul>
+                    <li>В личном кабинете на сайте TBMP</li>
+                    <li>В мобильном приложении TBMP</li>
+                    <li>В любом офисе TBMP при предъявлении паспорта</li>
+                    <li>Заказав доставку по электронной почте через службу поддержки</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

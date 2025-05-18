@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block title %}О компании{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+        <li class="breadcrumb-item active" aria-current="page">О компании</li>
+    </ol>
+</nav>
+
+<div class="about-page">
+    <h1 class="mb-4">О нашей компании</h1>
+    
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <p class="lead">Наша компания – ведущий оператор по предоставлению услуг мобильной и фиксированной связи, доступа в интернет, кабельного и спутникового ТВ-вещания, цифровых сервисов и мобильных приложений, финансовых услуг и сервисов электронной коммерции.</p>
+            
+            <p>Компания предоставляет услуги связи более чем 86 миллионам абонентов. Наш бренд входит в TOP-10 самых дорогих российских брендов и является одним из самых узнаваемых в стране.</p>
+            
+            <p>Мы активно внедряем инновационные технологии и сервисы, что позволяет нам постоянно улучшать качество связи и обслуживания наших клиентов.</p>
+        </div>
+        <div class="col-md-6">
+            <div class="ratio ratio-16x9">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Наша компания" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <div class="history-section mb-5">
+        <h2 class="section-title">История компании</h2>
+        <div class="timeline">
+            <div class="row g-0">
+                <div class="col-md-3 text-center">
+                    <div class="year-block p-3 bg-danger text-white rounded">
+                        1993
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="timeline-content p-3">
+                        <h5>Основание компании</h5>
+                        <p>Наша компания была основана в Москве.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-0 mt-3">
+                <div class="col-md-3 text-center">
+                    <div class="year-block p-3 bg-danger text-white rounded">
+                        2000
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="timeline-content p-3">
+                        <h5>Выход на IPO</h5>
+                        <p>Наша компания провела первичное публичное размещение акций на Нью-Йоркской фондовой бирже.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-0 mt-3">
+                <div class="col-md-3 text-center">
+                    <div class="year-block p-3 bg-danger text-white rounded">
+                        2006
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="timeline-content p-3">
+                        <h5>Запуск 3G</h5>
+                        <p>Компания запустила первую в России сеть 3G.</p>
+                    </div>
+                </div>
+            </div>            <div class="row g-0 mt-3">
+                <div class="col-md-3 text-center">
+                    <div class="year-block p-3 bg-danger text-white rounded">
+                        2012
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="timeline-content p-3">
+                        <h5>Запуск 4G</h5>
+                        <p>Компания запустила сеть 4G в России.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-0 mt-3">
+                <div class="col-md-3 text-center">
+                    <div class="year-block p-3 bg-danger text-white rounded">
+                        2021
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="timeline-content p-3">
+                        <h5>Запуск 5G</h5>
+                        <p>Компания начала тестировать сети 5G в ключевых городах России.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mission-section mb-5">
+        <h2 class="section-title">Миссия и ценности</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card h-100 border-danger">
+                    <div class="card-body">
+                        <h3 class="card-title">Миссия</h3>
+                        <p class="card-text">Мы создаём цифровые сервисы, которые делают жизнь наших клиентов лучше и ярче каждый день.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 border-danger">
+                    <div class="card-body">
+                        <h3 class="card-title">Видение</h3>
+                        <p class="card-text">Стать лидером в предоставлении цифровых услуг, обеспечивая лучший клиентский опыт на основе новейших технологий.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="mt-4 mb-3">Наши ценности</h3>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-users fa-2x text-danger"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="mb-1">Клиентоориентированность</h5>
+                        <p class="mb-0">Мы ставим интересы клиента в центр нашей деятельности.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-lightbulb fa-2x text-danger"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="mb-1">Инновационность</h5>
+                        <p class="mb-0">Мы постоянно ищем и внедряем новые технологии.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-handshake fa-2x text-danger"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="mb-1">Ответственность</h5>
+                        <p class="mb-0">Мы несём ответственность за результат нашей работы.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="leadership-section mb-5">
+        <h2 class="section-title">Руководство</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="rounded-circle mx-auto mb-3 overflow-hidden" style="width: 150px; height: 150px;">
+                            <i class="fas fa-user-tie fa-5x py-4 text-secondary"></i>
+                        </div>
+                        <h5 class="card-title">Иванов Иван Иванович</h5>
+                        <p class="card-text text-muted">Президент, Председатель правления</p>
+                        <p class="card-text">Возглавляет компанию с 2018 года. Имеет обширный опыт в телекоммуникационной отрасли.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="rounded-circle mx-auto mb-3 overflow-hidden" style="width: 150px; height: 150px;">
+                            <i class="fas fa-user-tie fa-5x py-4 text-secondary"></i>
+                        </div>
+                        <h5 class="card-title">Петрова Анна Сергеевна</h5>
+                        <p class="card-text text-muted">Финансовый директор</p>
+                        <p class="card-text">Отвечает за финансовую стратегию компании. Работает в компании с 2010 года.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="rounded-circle mx-auto mb-3 overflow-hidden" style="width: 150px; height: 150px;">
+                            <i class="fas fa-user-tie fa-5x py-4 text-secondary"></i>
+                        </div>
+                        <h5 class="card-title">Сидоров Алексей Викторович</h5>
+                        <p class="card-text text-muted">Технический директор</p>
+                        <p class="card-text">Отвечает за развитие технической инфраструктуры и внедрение инноваций.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Круглый фон -->
+  <circle cx="100" cy="100" r="90" fill="#f5f5f5" />
+  
+  <!-- Планшет -->
+  <rect x="40" y="40" width="120" height="110" rx="8" ry="8" fill="#004d40" stroke="#004d40" stroke-width="4" />
+  <rect x="46" y="48" width="108" height="80" rx="2" ry="2" fill="#ffffff" />
+  <circle cx="100" cy="142" r="8" fill="#ffffff" />
+</svg>

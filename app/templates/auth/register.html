@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Регистрация{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">                <div class="card-header bg-primary text-white">
+                    <h1 class="h4 mb-0">Регистрация нового пользователя</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="username" class="form-label">Имя пользователя*</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                                <div class="form-text">Будет использоваться для входа в систему</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email*</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="first_name" class="form-label">Имя</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="last_name" class="form-label">Фамилия</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Телефон</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="+7 (___) ___-__-__">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Адрес</label>
+                            <textarea class="form-control" id="address" name="address" rows="2"></textarea>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="password" class="form-label">Пароль*</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                                <div class="form-text">Минимум 8 символов</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="password_confirm" class="form-label">Подтверждение пароля*</label>
+                                <input type="password" class="form-control" id="password_confirm" name="password_confirm" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="agreement" name="agreement" required>
+                            <label class="form-check-label" for="agreement">Я согласен с <a href="#">условиями использования</a> и <a href="#">политикой конфиденциальности</a></label>
+                        </div>                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                        </div>
+                    </form>                    <div class="mt-4 text-center">
+                        <p>Уже есть аккаунт? <a href="{{ url_for('auth.login') }}" class="text-primary">Войти</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function(e) {
+            // Простая маска для телефона
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0 && value[0] !== '7') {
+                value = '7' + value;
+            }
+            
+            let formattedValue = '';
+            if (value.length > 0) {
+                formattedValue = '+' + value[0];
+                if (value.length > 1) {
+                    formattedValue += ' (' + value.substring(1, 4);
+                }
+                if (value.length > 4) {
+                    formattedValue += ') ' + value.substring(4, 7);
+                }
+                if (value.length > 7) {
+                    formattedValue += '-' + value.substring(7, 9);
+                }
+                if (value.length > 9) {
+                    formattedValue += '-' + value.substring(9, 11);
+                }
+            }
+            
+            e.target.value = formattedValue;
+        });
+    });
+</script>
+{% endblock %}

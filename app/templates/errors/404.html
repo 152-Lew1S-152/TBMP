@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}404 - Страница не найдена{% endblock %}
+
+{% block content %}
+<div class="container error-page">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 text-center">
+            <h1 class="display-1">404</h1>
+            <h2 class="mb-4">Страница не найдена</h2>
+            <p class="lead mb-4">К сожалению, страница, которую вы ищете, не существует или была перемещена.</p>
+            <div class="mb-5">
+                <a href="{{ url_for('main.index') }}" class="btn btn-primary btn-lg">На главную</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

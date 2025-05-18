@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Заказ успешно оформлен{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="text-center py-5">
+        <div class="mb-4">
+            <i class="fas fa-check-circle text-success fa-7x"></i>
+        </div>        <h1 class="mb-4">Ваш заказ успешно оформлен!</h1>
+        <p class="lead mb-4">Заказ №{{ order.id }} принят и обрабатывается.</p>
+        <p class="mb-4">Подтверждение заказа отправлено на вашу электронную почту: <strong>{{ order.contact_email }}</strong></p>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Информация о заказе</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h6>Номер заказа</h6>
+                                <p class="mb-0">{{ order.id }}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h6>Дата оформления</h6>
+                                <p class="mb-0">{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h6>Способ доставки</h6>                                <p class="mb-0">
+                                    {% if order.shipping_method == 'courier' %}
+                                        Курьерская доставка
+                                    {% elif order.shipping_method == 'pickup' %}
+                                        Самовывоз
+                                    {% else %}
+                                        {{ order.shipping_method or 'Не указан' }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h6>Способ оплаты</h6>
+                                <p class="mb-0">
+                                    {% if order.payment_method == 'card' %}
+                                        Оплата картой онлайн
+                                    {% elif order.payment_method == 'cash' %}
+                                        Оплата при получении
+                                    {% elif order.payment_method == 'installment' %}
+                                        Рассрочка
+                                    {% else %}
+                                        {{ order.payment_method or 'Не указан' }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <h6>Адрес доставки</h6>
+                                <p class="mb-0">{{ order.shipping_address }}</p>
+                            </div>
+                            <div class="col-12">
+                                <h6>Сумма заказа</h6>
+                                <p class="mb-0 text-danger fw-bold">{{ order.total_price }} ₽</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="{{ url_for('auth.order_detail', order_id=order.id) }}" class="btn btn-primary">Посмотреть детали заказа</a>
+                    <a href="{{ url_for('catalog.index') }}" class="btn btn-outline-dark">Продолжить покупки</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-5">
+        <h3 class="text-center mb-4">Рекомендуемые товары</h3>
+        <div class="row">
+            {% for i in range(4) %}
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="card h-100">
+                        <img src="{{ url_for('static', filename='img/no-image.png') }}" class="card-img-top" alt="Товар">
+                        <div class="card-body">
+                            <h5 class="card-title">Аксессуар для смартфона</h5>
+                            <p class="card-text text-danger fw-bold">от 990 ₽</p>
+                            <a href="{{ url_for('catalog.index') }}" class="btn btn-outline-danger btn-sm">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

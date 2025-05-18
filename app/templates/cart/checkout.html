@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Оформление заказа{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('cart.view_cart') }}">Корзина</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Оформление заказа</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">Оформление заказа</h1>
+
+    <div class="row">
+        <!-- Форма заказа -->
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Контактная информация</h5>
+                </div>
+                <div class="card-body">
+                    <form id="checkout-form" method="post" action="{{ url_for('cart.place_order') }}">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="first_name" class="form-label">Имя*</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ current_user.first_name }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="last_name" class="form-label">Фамилия*</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ current_user.last_name }}" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email*</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ current_user.email }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Телефон*</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" value="{{ current_user.phone }}" placeholder="+7 (___) ___-__-__" required>
+                            </div>
+                        </div>
+                          <hr class="my-4">
+                        
+                        <div class="card-header bg-primary text-white mb-3">
+                            <h5 class="mb-0">Доставка</h5>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Способ доставки*</label>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="shipping_method" id="shipping_courier" value="courier" checked>
+                                <label class="form-check-label" for="shipping_courier">
+                                    Курьерская доставка - 300 ₽
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="shipping_method" id="shipping_pickup" value="pickup">
+                                <label class="form-check-label" for="shipping_pickup">
+                                    Самовывоз из офиса - бесплатно
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div id="address-container" class="mb-4">
+                            <label for="address" class="form-label">Адрес доставки*</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" required>{{ current_user.address }}</textarea>
+                        </div>
+                          <div id="pickup-container" class="mb-4" style="display: none;">
+                            <label for="pickup_point" class="form-label">Пункт самовывоза*</label>
+                            <select class="form-select" id="pickup_point" name="pickup_point">
+                                <option value="" selected disabled>Выберите пункт самовывоза</option>                                <option value="1">Офис TBMP - ул. Ленина, 12</option>
+                                <option value="2">Офис TBMP - пр. Гагарина, 24</option>
+                                <option value="3">Офис TBMP - ул. Белинского, 63</option>
+                                <option value="4">Офис TBMP - ул. Коминтерна, 105</option>
+                                <option value="5">Офис TBMP - ул. Бекетова, 13</option>
+                            </select>
+                        </div>
+                          <hr class="my-4">
+                        
+                        <div class="card-header bg-primary text-white mb-3">
+                            <h5 class="mb-0">Оплата</h5>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Способ оплаты*</label>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment_method" id="payment_card" value="card" checked>
+                                <label class="form-check-label" for="payment_card">
+                                    Банковской картой онлайн
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment_method" id="payment_cash" value="cash">
+                                <label class="form-check-label" for="payment_cash">
+                                    Наличными при получении
+                                </label>
+                            </div>                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="payment_method" id="payment_installment" value="installment">
+                                <label class="form-check-label" for="payment_installment">
+                                    Рассрочка через банк-партнер
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Примечания к заказу</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Укажите особые пожелания к доставке или другую важную информацию"></textarea>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="agreement" name="agreement" required>
+                            <label class="form-check-label" for="agreement">Я согласен с <a href="#">условиями покупки</a> и <a href="#">политикой конфиденциальности</a></label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Информация о заказе -->
+        <div class="col-md-4">
+            <div class="card position-sticky" style="top: 20px;">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Ваш заказ</h5>
+                </div>
+                <div class="card-body">
+                    {% for item in items %}
+                        <div class="d-flex justify-content-between mb-2">
+                            <div>
+                                <span>{{ item.product.name }}</span>
+                                <span class="text-muted">× {{ item.quantity }}</span>
+                            </div>
+                            <span>{{ item.subtotal }} ₽</span>
+                        </div>
+                    {% endfor %}
+                    
+                    <hr>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Товары:</span>
+                        <span>{{ total }} ₽</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Доставка:</span>
+                        <span id="shipping-cost">300 ₽</span>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 class="mb-0">Итого:</h5>
+                        <h5 class="mb-0" id="total-amount">{{ total + 300 }} ₽</h5>
+                    </div>
+                      <div class="d-grid">
+                        <button type="submit" form="checkout-form" class="btn btn-primary">Оформить заказ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Получаем данные о стоимости из серверного шаблона и преобразуем их в число
+    var productTotal = parseInt('{{ total|default(0) }}');
+    if (isNaN(productTotal)) productTotal = 0;
+    
+    // Телефонная маска
+    var phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            var value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0 && value[0] !== '7') {
+                value = '7' + value;
+            }
+            
+            var formattedValue = '';
+            if (value.length > 0) {
+                formattedValue = '+' + value[0];
+                if (value.length > 1) {
+                    formattedValue += ' (' + value.substring(1, 4);
+                }
+                if (value.length > 4) {
+                    formattedValue += ') ' + value.substring(4, 7);
+                }
+                if (value.length > 7) {
+                    formattedValue += '-' + value.substring(7, 9);
+                }
+                if (value.length > 9) {
+                    formattedValue += '-' + value.substring(9, 11);
+                }
+            }
+            
+            e.target.value = formattedValue;
+        });
+    }
+    
+    // Переключение между доставкой и самовывозом
+    var shippingCourierRadio = document.getElementById('shipping_courier');
+    var shippingPickupRadio = document.getElementById('shipping_pickup');
+    var addressContainer = document.getElementById('address-container');
+    var pickupContainer = document.getElementById('pickup-container');
+    var shippingCost = document.getElementById('shipping-cost');
+    var totalAmount = document.getElementById('total-amount');
+    
+    if (shippingCourierRadio && shippingPickupRadio && addressContainer && pickupContainer && shippingCost && totalAmount) {
+        function updateShippingMethod() {
+            if (shippingCourierRadio.checked) {
+                addressContainer.style.display = 'block';
+                pickupContainer.style.display = 'none';
+                
+                var addressInput = document.getElementById('address');
+                if (addressInput) {
+                    addressInput.setAttribute('required', '');
+                }
+                
+                var pickupInput = document.getElementById('pickup_point');
+                if (pickupInput) {
+                    pickupInput.removeAttribute('required');
+                }
+                
+                shippingCost.textContent = '300 ₽';
+                totalAmount.textContent = (productTotal + 300) + ' ₽';
+            } else {
+                addressContainer.style.display = 'none';
+                pickupContainer.style.display = 'block';
+                
+                var addressInput = document.getElementById('address');
+                if (addressInput) {
+                    addressInput.removeAttribute('required');
+                }
+                
+                var pickupInput = document.getElementById('pickup_point');
+                if (pickupInput) {
+                    pickupInput.setAttribute('required', '');
+                }
+                
+                shippingCost.textContent = '0 ₽';
+                totalAmount.textContent = productTotal + ' ₽';
+            }
+        }
+        
+        shippingCourierRadio.addEventListener('change', updateShippingMethod);
+        shippingPickupRadio.addEventListener('change', updateShippingMethod);
+        
+        // Инициализация при загрузке страницы
+        updateShippingMethod();
+    }
+});
+</script>
+{% endblock %}

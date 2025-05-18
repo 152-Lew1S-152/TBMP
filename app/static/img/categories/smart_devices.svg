@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Круглый фон -->
+  <circle cx="100" cy="100" r="90" fill="#f5f5f5" />
+  
+  <!-- Умные часы -->
+  <rect x="70" y="60" width="60" height="80" rx="10" ry="10" fill="#004d40" />
+  <rect x="75" y="70" width="50" height="60" rx="5" ry="5" fill="#ffffff" />
+  
+  <!-- Ремешок -->
+  <path d="M70,65 L60,40 L140,40 L130,65" fill="#004d40" />
+  <path d="M70,135 L60,160 L140,160 L130,135" fill="#004d40" />
+  
+  <!-- Время на экране -->
+  <line x1="100" y1="75" x2="100" y2="95" stroke="#004d40" stroke-width="2" />
+  <line x1="100" y1="100" x2="110" y2="100" stroke="#004d40" stroke-width="2" />
+  <circle cx="100" cy="100" r="3" fill="#004d40" />
+  <circle cx="100" cy="100" r="25" stroke="#004d40" stroke-width="2" fill="transparent" />
+</svg>

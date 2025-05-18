@@ -1,0 +1,35 @@
+.category-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .category-icon {
+    transform: scale(1.1);
+}
+
+.card {
+    transition: box-shadow 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: 0 5px 15px rgba(0, 77, 64, 0.2);
+}
+
+.categories-section .card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.9));
+}
+
+.categories-section .card-title {
+    font-weight: 600;
+    color: #004d40;
+    margin-bottom: 10px;
+}
+
+.categories-section .card-text {
+    color: #555;
+    margin-bottom: 15px;
+}

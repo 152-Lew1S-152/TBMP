@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Тарифы{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Тарифы</li>
+    </ol>
+</nav>
+
+<div class="tariffs-header mb-4">
+    <h1>Тарифы TBMP</h1>
+    <p class="lead">Выберите оптимальный тариф для ваших потребностей</p>
+</div>
+
+<div class="tariffs-filter mb-4">
+    <div class="card">        <div class="card-body">
+            <h5 class="card-title">Фильтры</h5>
+            <form action="{{ url_for('tariffs.index') }}" method="get" id="filterForm">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="priceRange" class="form-label">Цена в месяц</label>
+                        <select class="form-select" id="priceRange" name="priceRange">
+                            <option value="all" {% if price_range == 'all' %}selected{% endif %}>Любая</option>
+                            <option value="0-300" {% if price_range == '0-300' %}selected{% endif %}>До 300 ₽</option>
+                            <option value="300-500" {% if price_range == '300-500' %}selected{% endif %}>300-500 ₽</option>
+                            <option value="500-1000" {% if price_range == '500-1000' %}selected{% endif %}>500-1000 ₽</option>
+                            <option value="1000+" {% if price_range == '1000+' %}selected{% endif %}>Более 1000 ₽</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="internetFilter" class="form-label">Интернет</label>
+                        <select class="form-select" id="internetFilter" name="internetFilter">
+                            <option value="all" {% if internet_filter == 'all' %}selected{% endif %}>Любой</option>
+                            <option value="0-10" {% if internet_filter == '0-10' %}selected{% endif %}>До 10 ГБ</option>
+                            <option value="10-30" {% if internet_filter == '10-30' %}selected{% endif %}>10-30 ГБ</option>
+                            <option value="30+" {% if internet_filter == '30+' %}selected{% endif %}>Более 30 ГБ</option>
+                            <option value="unlimited" {% if internet_filter == 'unlimited' %}selected{% endif %}>Безлимитный</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="minutesFilter" class="form-label">Минуты</label>
+                        <select class="form-select" id="minutesFilter" name="minutesFilter">
+                            <option value="all" {% if minutes_filter == 'all' %}selected{% endif %}>Любые</option>
+                            <option value="0-300" {% if minutes_filter == '0-300' %}selected{% endif %}>До 300 мин</option>
+                            <option value="300-600" {% if minutes_filter == '300-600' %}selected{% endif %}>300-600 мин</option>
+                            <option value="600+" {% if minutes_filter == '600+' %}selected{% endif %}>Более 600 мин</option>
+                            <option value="unlimited" {% if minutes_filter == 'unlimited' %}selected{% endif %}>Безлимитные</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3 d-flex align-items-end">                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-grow-1">Применить</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="resetFilters()">Сбросить</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="tariffs-comparison mb-5">
+    <div class="text-end mb-3">
+        <a href="{{ url_for('tariffs.compare') }}" class="btn btn-outline-danger">
+            <i class="fas fa-balance-scale me-2"></i> Сравнить тарифы
+        </a>
+    </div>
+    
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        {% if tariffs %}
+        {% for tariff in tariffs %}
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm {% if tariff.name == 'Безлимит Premium' %}border-danger{% endif %}">
+                <div class="card-header py-3 {% if tariff.name == 'Безлимит Premium' %}bg-danger text-white{% endif %}">
+                    <h4 class="my-0 fw-normal">{{ tariff.name }}</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ tariff.price|round|int }} ₽<small class="text-muted fw-light">/{{ tariff.period }}</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        {% if 'безлимит' in tariff.description.lower() %}
+                        <li><i class="fas fa-check text-success me-2"></i> Безлимитный интернет</li>
+                        {% else %}
+                        <li><i class="fas fa-check text-success me-2"></i> {{ "15 ГБ" if "Лайт" in tariff.name else "30 ГБ" }} интернета</li>
+                        {% endif %}
+                        
+                        {% if "Безлимит" in tariff.name %}
+                        <li><i class="fas fa-check text-success me-2"></i> 1000 минут связи</li>
+                        {% elif "Оптима" in tariff.name %}
+                        <li><i class="fas fa-check text-success me-2"></i> 500 минут связи</li>
+                        {% else %}
+                        <li><i class="fas fa-check text-success me-2"></i> 200 минут связи</li>
+                        {% endif %}
+                        
+                        <li><i class="fas fa-check text-success me-2"></i> {{ "30" if "Лайт" in tariff.name else ("50" if "Оптима" in tariff.name else "100") }} SMS в месяц</li>
+                        
+                        {% if "Безлимит" in tariff.name %}
+                        <li><i class="fas fa-check text-success me-2"></i> Безлимитные соцсети и YouTube</li>
+                        {% elif "Оптима" in tariff.name %}
+                        <li><i class="fas fa-check text-success me-2"></i> Безлимитные соцсети</li>
+                        {% else %}
+                        <li><i class="fas fa-check text-success me-2"></i> Безлимитные мессенджеры</li>
+                        {% endif %}
+                    </ul>
+                    <a href="{{ url_for('tariffs.tariff_detail', tariff_id=tariff.id) }}" class="w-100 btn btn-lg {% if 'Безлимит' in tariff.name %}btn-success{% else %}btn-outline-primary{% endif %}">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12 text-center py-5 no-results-message">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Нет тарифов, соответствующих выбранным критериям. Попробуйте изменить параметры фильтра.
+            </div>
+            <button class="btn btn-outline-danger mt-3" onclick="resetFilters()">
+                <i class="fas fa-undo me-2"></i>Сбросить фильтры
+            </button>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="tariff-benefits mb-5">
+    <h2 class="section-title mb-4">Преимущества наших тарифов</h2>
+    <div class="row">
+        <div class="col-md-3 mb-4 text-center">
+            <div class="benefit-icon mb-3">
+                <i class="fas fa-globe fa-4x text-danger"></i>
+            </div>
+            <h4>Высокая скорость интернета</h4>
+            <p>Благодаря современной сети 4G/LTE скорость интернета достигает до 150 Мбит/с</p>
+        </div>
+        <div class="col-md-3 mb-4 text-center">
+            <div class="benefit-icon mb-3">
+                <i class="fas fa-handshake fa-4x text-danger"></i>
+            </div>
+            <h4>Гибкие условия</h4>
+            <p>Настраивайте тариф под себя, добавляя нужные услуги и опции</p>
+        </div>
+        <div class="col-md-3 mb-4 text-center">
+            <div class="benefit-icon mb-3">
+                <i class="fas fa-map-marked-alt fa-4x text-danger"></i>
+            </div>
+            <h4>Широкое покрытие</h4>
+            <p>Стабильная связь по всей России и в популярных странах мира</p>
+        </div>
+        <div class="col-md-3 mb-4 text-center">
+            <div class="benefit-icon mb-3">
+                <i class="fas fa-percent fa-4x text-danger"></i>
+            </div>
+            <h4>Выгодные акции</h4>
+            <p>Регулярные акции и специальные предложения для новых и существующих клиентов</p>
+        </div>
+    </div>
+</div>
+
+<div class="tariff-faq mb-5">
+    <h2 class="section-title mb-4">Часто задаваемые вопросы</h2>
+    <div class="accordion" id="tariffFAQ">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Как перейти на новый тариф?
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#tariffFAQ">
+                <div class="accordion-body">                    <p>Перейти на новый тариф можно несколькими способами:</p>
+                    <ul>
+                        <li>В нашем мобильном приложении: в разделе «Тарифы и услуги» выберите «Сменить тариф»</li>
+                        <li>Через личный кабинет на нашем сайте</li>
+                        <li>В любом нашем салоне связи при предъявлении документа, удостоверяющего личность</li>
+                        <li>По телефону контактного центра 8 800 250 0890 (звонок бесплатный)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Сколько стоит переход на новый тариф?
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#tariffFAQ">
+                <div class="accordion-body">
+                    <p>Переход на большинство тарифных планов бесплатный. Однако за переход на некоторые архивные тарифы может взиматься небольшая плата.</p>
+                    <p>При переходе на новый тариф с вашего счета спишется абонентская плата за новый тарифный план. Неизрасходованные пакеты минут, SMS и интернет-трафика с предыдущего тарифа не переносятся.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Что такое безлимитные мессенджеры и соцсети?
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#tariffFAQ">
+                <div class="accordion-body">
+                    <p>Безлимитные мессенджеры и социальные сети — это опции, которые позволяют не расходовать пакет интернет-трафика при использовании определенных приложений.</p>
+                    <p><strong>Безлимитные мессенджеры включают:</strong> WhatsApp, Viber, Telegram, Facebook Messenger</p>
+                    <p><strong>Безлимитные соцсети включают:</strong> ВКонтакте, Одноклассники, Facebook, Instagram*</p>
+                    <p><small>* Сервис принадлежит компании Meta, признанной экстремистской организацией и запрещенной в России</small></p>
+                </div>
+            </div>
+        </div>    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Добавляем обработчик изменений в фильтрах для автоматического применения
+    const filterForm = document.getElementById('filterForm');
+    const selects = filterForm.querySelectorAll('select');
+    
+    // Автоматическая отправка формы при изменении любого фильтра
+    selects.forEach(select => {
+        select.addEventListener('change', function() {
+            filterForm.submit();
+        });
+    });
+});
+
+// Функция сброса всех фильтров
+function resetFilters() {
+    const form = document.getElementById('filterForm');
+    const selects = form.querySelectorAll('select');
+    selects.forEach(select => {
+        select.value = 'all';
+    });
+    form.submit();
+}
+</script>
+{% endblock %}
+

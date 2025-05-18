@@ -1,0 +1,615 @@
+2025-05-12 22:11:26,282 [INFO] Запуск приложения
+2025-05-12 22:11:26,348 [ERROR] Ошибка настройки SQLite: (sqlite3.OperationalError) database is locked
+[SQL: PRAGMA journal_mode = WAL]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:11:30,996 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.8.1.2:8000
+2025-05-12 22:11:30,996 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-12 22:11:30,998 [INFO]  * Restarting with stat
+2025-05-12 22:11:31,499 [INFO] Запуск приложения
+2025-05-12 22:11:31,559 [ERROR] Ошибка настройки SQLite: (sqlite3.OperationalError) database is locked
+[SQL: PRAGMA journal_mode = WAL]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:11:31,567 [WARNING]  * Debugger is active!
+2025-05-12 22:11:31,570 [INFO]  * Debugger PIN: 733-203-314
+2025-05-12 22:12:18,949 [INFO] 127.0.0.1 - - [12/May/2025 22:12:18] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2025-05-12 22:12:46,112 [ERROR] Ошибка добавления товара: (sqlite3.OperationalError) database is locked
+[SQL: INSERT INTO product (name, description, price, image, stock, category_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('iPhone', 'нет', 123.0, None, 12, '1', '2025-05-12 19:12:13.790481')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:13:04,062 [ERROR] Ошибка добавления товара: (sqlite3.OperationalError) database is locked
+[SQL: INSERT INTO product (name, description, price, image, stock, category_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('iPhone', 'нет', 123.0, None, 12, '1', '2025-05-12 19:12:31.728968')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:13:20,419 [ERROR] Вторая попытка добавления товара не удалась: (sqlite3.OperationalError) database is locked
+[SQL: INSERT INTO product (name, description, price, image, stock, category_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('iPhone', 'нет', 123.0, None, 12, '1', '2025-05-12 19:12:48.115607')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:13:20,420 [INFO] 127.0.0.1 - - [12/May/2025 22:13:20] "[32mPOST /admin/products/add HTTP/1.1[0m" 302 -
+2025-05-12 22:13:38,307 [ERROR] Вторая попытка добавления товара не удалась: (sqlite3.OperationalError) database is locked
+[SQL: INSERT INTO product (name, description, price, image, stock, category_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('iPhone', 'нет', 123.0, None, 12, '1', '2025-05-12 19:13:06.071715')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:13:38,308 [INFO] 127.0.0.1 - - [12/May/2025 22:13:38] "[32mPOST /admin/products/add HTTP/1.1[0m" 302 -
+2025-05-12 22:14:21,246 [INFO]  * Detected change in 'c:\\Users\\user\\Desktop\\учёба\\Kyrosvaya\\TestVersion\\run.py', reloading
+2025-05-12 22:14:21,316 [INFO]  * Restarting with stat
+2025-05-12 22:14:21,879 [INFO] Запуск приложения
+2025-05-12 22:14:21,939 [INFO] [Попытка 1] Установлен таймаут SQLite
+2025-05-12 22:14:21,940 [INFO] [Попытка 1] Установлен асинхронный режим SQLite
+2025-05-12 22:14:21,940 [INFO] Текущий режим журнала SQLite: delete
+2025-05-12 22:14:21,941 [WARNING] Не удалось изменить режим журнала: (sqlite3.OperationalError) database is locked
+[SQL: PRAGMA journal_mode = WAL]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:14:21,941 [INFO] SQLite настроен для снижения вероятности блокировок
+2025-05-12 22:14:21,949 [WARNING]  * Debugger is active!
+2025-05-12 22:14:21,953 [INFO]  * Debugger PIN: 733-203-314
+2025-05-12 22:16:21,569 [INFO]  * Detected change in 'c:\\Users\\user\\Desktop\\учёба\\Kyrosvaya\\TestVersion\\app\\db_utils.py', reloading
+2025-05-12 22:16:21,657 [INFO]  * Restarting with stat
+2025-05-12 22:16:22,215 [INFO] Запуск приложения
+2025-05-12 22:16:22,276 [INFO] [Попытка 1] Установлен таймаут SQLite
+2025-05-12 22:16:22,276 [INFO] [Попытка 1] Установлен асинхронный режим SQLite
+2025-05-12 22:16:22,276 [INFO] Текущий режим журнала SQLite: delete
+2025-05-12 22:16:22,277 [WARNING] Не удалось изменить режим журнала: (sqlite3.OperationalError) database is locked
+[SQL: PRAGMA journal_mode = WAL]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:16:22,277 [INFO] SQLite настроен для снижения вероятности блокировок
+2025-05-12 22:16:22,286 [WARNING]  * Debugger is active!
+2025-05-12 22:16:22,290 [INFO]  * Debugger PIN: 733-203-314
+2025-05-12 22:17:50,809 [INFO]  * Detected change in 'c:\\Users\\user\\Desktop\\учёба\\Kyrosvaya\\TestVersion\\app\\db_utils.py', reloading
+2025-05-12 22:17:50,877 [INFO]  * Restarting with stat
+2025-05-12 22:17:51,416 [INFO] Запуск приложения
+2025-05-12 22:17:51,477 [INFO] [Попытка 1] Установлен таймаут SQLite
+2025-05-12 22:17:51,478 [INFO] [Попытка 1] Установлен асинхронный режим SQLite
+2025-05-12 22:17:51,478 [INFO] Текущий режим журнала SQLite: delete
+2025-05-12 22:17:51,478 [WARNING] Не удалось изменить режим журнала: (sqlite3.OperationalError) database is locked
+[SQL: PRAGMA journal_mode = WAL]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:17:51,479 [INFO] SQLite настроен для снижения вероятности блокировок
+2025-05-12 22:17:51,488 [WARNING]  * Debugger is active!
+2025-05-12 22:17:51,491 [INFO]  * Debugger PIN: 733-203-314
+2025-05-12 22:19:40,376 [INFO]  * Detected change in 'c:\\Users\\user\\Desktop\\учёба\\Kyrosvaya\\TestVersion\\clear_db_locks.py', reloading
+2025-05-12 22:19:40,443 [INFO]  * Restarting with stat
+2025-05-12 22:19:40,949 [INFO] Запуск приложения
+2025-05-12 22:19:41,009 [INFO] [Попытка 1] Установлен таймаут SQLite
+2025-05-12 22:19:41,010 [INFO] [Попытка 1] Установлен асинхронный режим SQLite
+2025-05-12 22:19:41,010 [INFO] Текущий режим журнала SQLite: delete
+2025-05-12 22:19:41,011 [WARNING] Не удалось изменить режим журнала: (sqlite3.OperationalError) database is locked
+[SQL: PRAGMA journal_mode = WAL]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:19:41,011 [INFO] SQLite настроен для снижения вероятности блокировок
+2025-05-12 22:19:41,021 [WARNING]  * Debugger is active!
+2025-05-12 22:19:41,024 [INFO]  * Debugger PIN: 733-203-314
+2025-05-12 22:19:44,558 [INFO]  * Detected change in 'c:\\Users\\user\\Desktop\\учёба\\Kyrosvaya\\TestVersion\\app\\db_utils.py', reloading
+2025-05-12 22:19:44,624 [INFO]  * Restarting with stat
+2025-05-12 22:19:45,131 [INFO] Запуск приложения
+2025-05-12 22:19:45,190 [INFO] [Попытка 1] Установлен таймаут SQLite
+2025-05-12 22:19:45,191 [INFO] [Попытка 1] Установлен асинхронный режим SQLite
+2025-05-12 22:19:45,191 [INFO] Текущий режим журнала SQLite: delete
+2025-05-12 22:19:45,191 [WARNING] Не удалось изменить режим журнала: (sqlite3.OperationalError) database is locked
+[SQL: PRAGMA journal_mode = WAL]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:19:45,191 [INFO] SQLite настроен для снижения вероятности блокировок
+2025-05-12 22:19:45,199 [WARNING]  * Debugger is active!
+2025-05-12 22:19:45,203 [INFO]  * Debugger PIN: 733-203-314
+2025-05-12 22:19:56,363 [INFO] Запуск приложения
+2025-05-12 22:19:56,423 [INFO] [Попытка 1] Установлен таймаут SQLite
+2025-05-12 22:19:56,424 [INFO] [Попытка 1] Установлен асинхронный режим SQLite
+2025-05-12 22:19:56,424 [INFO] Текущий режим журнала SQLite: delete
+2025-05-12 22:19:56,424 [WARNING] Не удалось изменить режим журнала: (sqlite3.OperationalError) database is locked
+[SQL: PRAGMA journal_mode = WAL]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:19:56,425 [INFO] SQLite настроен для снижения вероятности блокировок
+2025-05-12 22:20:01,076 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.8.1.2:8000
+2025-05-12 22:20:01,076 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-12 22:20:01,078 [INFO]  * Restarting with stat
+2025-05-12 22:20:01,571 [INFO] Запуск приложения
+2025-05-12 22:20:01,633 [INFO] [Попытка 1] Установлен таймаут SQLite
+2025-05-12 22:20:01,633 [INFO] [Попытка 1] Установлен асинхронный режим SQLite
+2025-05-12 22:20:01,634 [INFO] Текущий режим журнала SQLite: delete
+2025-05-12 22:20:01,634 [WARNING] Не удалось изменить режим журнала: (sqlite3.OperationalError) database is locked
+[SQL: PRAGMA journal_mode = WAL]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:20:01,634 [INFO] SQLite настроен для снижения вероятности блокировок
+2025-05-12 22:20:01,643 [WARNING]  * Debugger is active!
+2025-05-12 22:20:01,646 [INFO]  * Debugger PIN: 733-203-314
+2025-05-12 22:20:19,206 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "GET /admin/products HTTP/1.1" 200 -
+2025-05-12 22:20:19,226 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/iphone_15_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,228 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/iphone_15.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,229 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/samsung_a54.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,230 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/xiaomi_redmi_note_12_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,238 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/samsung_s23_ultra.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,239 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/honor_90.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,240 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/google_pixel_7_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,241 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/oppo_reno_10_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,249 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/ipad_pro_12.9.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,251 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/ipad_air.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,253 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/samsung_tab_a8.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,254 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/samsung_tab_s9.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,259 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/macbook_air_m2.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,262 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/macbook_pro_14.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,263 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/asus_rog_strix.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,265 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/lenovo_ideapad.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,268 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/iphone_case.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,271 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/airpods_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,274 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/galaxy_watch.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,277 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/magsafe_duo.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,280 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/screen_protector.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,282 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/apple_watch_s9.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,285 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/yandex_mini.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,286 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-12 22:20:19,288 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/mi_band_7.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,290 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[33mGET /static/img/products/philips_hue.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:19,308 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-12 22:20:19,350 [INFO] 127.0.0.1 - - [12/May/2025 22:20:19] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2025-05-12 22:20:25,047 [INFO] 127.0.0.1 - - [12/May/2025 22:20:25] "GET /admin/ HTTP/1.1" 200 -
+2025-05-12 22:20:25,061 [INFO] 127.0.0.1 - - [12/May/2025 22:20:25] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-12 22:20:25,064 [INFO] 127.0.0.1 - - [12/May/2025 22:20:25] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-12 22:20:25,107 [INFO] 127.0.0.1 - - [12/May/2025 22:20:25] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2025-05-12 22:20:27,544 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "GET /admin/products HTTP/1.1" 200 -
+2025-05-12 22:20:27,562 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-12 22:20:27,568 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/iphone_15_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,568 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/iphone_15.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,571 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/samsung_s23_ultra.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,573 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/samsung_a54.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,576 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/xiaomi_redmi_note_12_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,579 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-12 22:20:27,582 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/honor_90.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,585 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/google_pixel_7_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,587 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/oppo_reno_10_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,591 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/ipad_pro_12.9.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,597 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/ipad_air.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,602 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/samsung_tab_s9.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,606 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/samsung_tab_a8.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,608 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/macbook_air_m2.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,612 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/macbook_pro_14.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,612 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/asus_rog_strix.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,619 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/iphone_case.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,620 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/lenovo_ideapad.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,623 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/airpods_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,624 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/galaxy_watch.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,631 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/magsafe_duo.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,634 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/screen_protector.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,636 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/yandex_mini.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,636 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/apple_watch_s9.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,638 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/mi_band_7.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,640 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[33mGET /static/img/products/philips_hue.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:20:27,683 [INFO] 127.0.0.1 - - [12/May/2025 22:20:27] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2025-05-12 22:21:15,169 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "GET /admin/products HTTP/1.1" 200 -
+2025-05-12 22:21:15,185 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-12 22:21:15,189 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/iphone_15_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,193 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/samsung_s23_ultra.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,194 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/iphone_15.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,197 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/xiaomi_redmi_note_12_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,198 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-12 22:21:15,199 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/samsung_a54.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,204 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/honor_90.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,208 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/ipad_air.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,211 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/samsung_tab_s9.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,214 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/ipad_pro_12.9.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,217 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/oppo_reno_10_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,220 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/samsung_tab_a8.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,220 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/google_pixel_7_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,223 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/galaxy_watch.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,224 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/mi_band_7.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,228 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/lenovo_ideapad.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,234 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/yandex_mini.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,238 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/magsafe_duo.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,238 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/airpods_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,239 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/screen_protector.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,243 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/philips_hue.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,244 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/iphone_case.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,251 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/macbook_air_m2.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,253 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/macbook_pro_14.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,253 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/asus_rog_strix.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,270 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[33mGET /static/img/products/apple_watch_s9.jpg HTTP/1.1[0m" 404 -
+2025-05-12 22:21:15,305 [INFO] 127.0.0.1 - - [12/May/2025 22:21:15] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+2025-05-12 22:21:16,503 [ERROR] Ошибка добавления товара: (sqlite3.OperationalError) database is locked
+[SQL: INSERT INTO product (name, description, price, image, stock, category_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('iPhone', 'нет', 123.0, None, 12, '1', '2025-05-12 19:20:44.265509')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:21:18,505 [INFO] Попытка 1 из 5 исправить блокировку БД
+2025-05-12 22:21:18,506 [INFO] Попытка 1: соединение с БД установлено
+2025-05-12 22:21:40,654 [ERROR] Ошибка добавления товара: (sqlite3.OperationalError) database is locked
+[SQL: INSERT INTO product (name, description, price, image, stock, category_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('iPhone', 'нет', 123.0, None, 12, '1', '2025-05-12 19:21:08.365129')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:21:41,527 [ERROR] Ошибка добавления товара: (sqlite3.OperationalError) database is locked
+[SQL: INSERT INTO product (name, description, price, image, stock, category_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('iPhone', 'нет', 123.0, None, 12, '1', '2025-05-12 19:21:09.197637')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:21:42,656 [INFO] Попытка 1 из 5 исправить блокировку БД
+2025-05-12 22:21:42,657 [INFO] Попытка 1: соединение с БД установлено
+2025-05-12 22:21:43,527 [INFO] Попытка 1 из 5 исправить блокировку БД
+2025-05-12 22:21:43,529 [INFO] Попытка 1: соединение с БД установлено
+2025-05-12 22:21:50,835 [ERROR] Вторая попытка добавления товара не удалась: (sqlite3.OperationalError) database is locked
+[SQL: INSERT INTO product (name, description, price, image, stock, category_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('iPhone', 'нет', 123.0, None, 12, '1', '2025-05-12 19:21:18.507451')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:21:50,836 [INFO] 127.0.0.1 - - [12/May/2025 22:21:50] "[32mPOST /admin/products/add HTTP/1.1[0m" 302 -
+2025-05-12 22:22:09,218 [INFO]  * Detected change in 'c:\\Users\\user\\Desktop\\учёба\\Kyrosvaya\\TestVersion\\app\\db_utils.py', reloading
+2025-05-12 22:22:09,305 [INFO]  * Restarting with stat
+2025-05-12 22:22:09,820 [INFO] Запуск приложения
+2025-05-12 22:22:09,882 [ERROR] Ошибка настройки SQLite: (sqlite3.OperationalError) database is locked
+[SQL: PRAGMA journal_mode = WAL]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-12 22:22:09,890 [WARNING]  * Debugger is active!
+2025-05-12 22:22:09,894 [INFO]  * Debugger PIN: 733-203-314
+2025-05-12 22:22:30,135 [INFO]  * Detected change in 'c:\\Users\\user\\Desktop\\учёба\\Kyrosvaya\\TestVersion\\app\\routes\\admin.py', reloading
+2025-05-12 22:22:30,204 [INFO]  * Restarting with stat
+2025-05-12 22:23:47,935 [INFO]  * Restarting with stat
+2025-05-13 23:23:49,222 - __main__ - INFO - Проверяем базу данных: instance\telecom_site.sqlite
+2025-05-13 23:23:49,222 - __main__ - WARNING - Обнаружен WAL-файл: instance\telecom_site.sqlite-wal
+2025-05-13 23:23:49,223 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-13 23:23:49,223 - __main__ - INFO - Проверяем базу данных: instance\mts_site.sqlite
+2025-05-13 23:23:49,226 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-13 23:29:44,457 - __main__ - INFO - Запускаем безопасную проверку БД перед запуском приложения
+2025-05-13 23:29:44,457 - __main__ - INFO - Проверяем базу данных: instance\telecom_site.sqlite
+2025-05-13 23:29:44,457 - __main__ - WARNING - Обнаружен WAL-файл: instance\telecom_site.sqlite-wal
+2025-05-13 23:29:44,458 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-13 23:29:44,458 - __main__ - INFO - Проверяем базу данных: instance\mts_site.sqlite
+2025-05-13 23:29:44,458 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-13 23:29:44,458 - __main__ - INFO - БД проверена, запускаем приложение
+2025-05-13 23:29:44,949 - app - INFO - Instance директория проверена: c:\Users\user\Desktop\учёба\Kyrosvaya\TestVersion\instance
+2025-05-13 23:29:44,956 - app - INFO - SQLite настроен с увеличенным timeout и WAL-режимом
+2025-05-13 23:29:44,982 - app.db_utils - INFO - SQLite journal mode set to: wal
+2025-05-13 23:29:44,994 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-13 23:29:44,994 - __main__ - INFO - Приложение готово к запуску
+2025-05-13 23:29:49,649 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.8.1.2:8000
+2025-05-13 23:29:49,649 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-13 23:29:49,650 - werkzeug - INFO -  * Restarting with stat
+2025-05-13 23:29:49,708 - __main__ - INFO - Запускаем безопасную проверку БД перед запуском приложения
+2025-05-13 23:29:49,708 - __main__ - INFO - Проверяем базу данных: instance\telecom_site.sqlite
+2025-05-13 23:29:49,708 - __main__ - WARNING - Обнаружен WAL-файл: instance\telecom_site.sqlite-wal
+2025-05-13 23:29:49,708 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-13 23:29:49,708 - __main__ - INFO - Проверяем базу данных: instance\mts_site.sqlite
+2025-05-13 23:29:49,709 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-13 23:29:49,709 - __main__ - INFO - БД проверена, запускаем приложение
+2025-05-13 23:29:50,144 - app - INFO - Instance директория проверена: c:\Users\user\Desktop\учёба\Kyrosvaya\TestVersion\instance
+2025-05-13 23:29:50,151 - app - INFO - SQLite настроен с увеличенным timeout и WAL-режимом
+2025-05-13 23:29:50,177 - app.db_utils - INFO - SQLite journal mode set to: wal
+2025-05-13 23:29:50,189 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-13 23:29:50,189 - __main__ - INFO - Приложение готово к запуску
+2025-05-13 23:29:50,197 - werkzeug - WARNING -  * Debugger is active!
+2025-05-13 23:29:50,200 - werkzeug - INFO -  * Debugger PIN: 733-203-314
+2025-05-13 23:30:14,864 - werkzeug - INFO -  * Detected change in 'c:\\Users\\user\\Desktop\\учёба\\Kyrosvaya\\TestVersion\\test_run.py', reloading
+2025-05-13 23:30:14,937 - werkzeug - INFO -  * Restarting with stat
+2025-05-13 23:30:14,995 - __main__ - INFO - Запускаем безопасную проверку БД перед запуском приложения
+2025-05-13 23:30:14,995 - __main__ - INFO - Проверяем базу данных: instance\telecom_site.sqlite
+2025-05-13 23:30:14,995 - __main__ - WARNING - Обнаружен WAL-файл: instance\telecom_site.sqlite-wal
+2025-05-13 23:30:14,995 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-13 23:30:14,995 - __main__ - INFO - Проверяем базу данных: instance\mts_site.sqlite
+2025-05-13 23:30:14,995 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-13 23:30:14,995 - __main__ - INFO - БД проверена, запускаем приложение
+2025-05-13 23:30:15,456 - app - INFO - Instance директория проверена: c:\Users\user\Desktop\учёба\Kyrosvaya\TestVersion\instance
+2025-05-13 23:30:15,462 - app - INFO - SQLite настроен с увеличенным timeout и WAL-режимом
+2025-05-13 23:30:15,488 - app.db_utils - INFO - SQLite journal mode set to: wal
+2025-05-13 23:30:15,500 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-13 23:30:15,500 - __main__ - INFO - Приложение готово к запуску
+2025-05-13 23:30:15,507 - werkzeug - WARNING -  * Debugger is active!
+2025-05-13 23:30:15,511 - werkzeug - INFO -  * Debugger PIN: 733-203-314
+2025-05-13 23:35:04,968 - __main__ - INFO - Запускаем безопасную проверку БД перед запуском приложения
+2025-05-13 23:35:04,969 - __main__ - INFO - Проверяем базу данных: instance\telecom_site.sqlite
+2025-05-13 23:35:04,969 - __main__ - WARNING - Обнаружен WAL-файл: instance\telecom_site.sqlite-wal
+2025-05-13 23:35:04,969 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-13 23:35:04,969 - __main__ - INFO - БД проверена, запускаем приложение
+2025-05-13 23:35:05,403 - app - INFO - Instance директория проверена: c:\Users\user\Desktop\учёба\Kyrosvaya\TestVersion\instance
+2025-05-13 23:35:05,409 - app - INFO - SQLite настроен с увеличенным timeout и WAL-режимом
+2025-05-13 23:35:05,435 - app.db_utils - INFO - SQLite journal mode set to: wal
+2025-05-13 23:35:05,447 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-13 23:35:05,447 - __main__ - INFO - Приложение готово к запуску
+2025-05-13 23:35:10,054 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.8.1.2:8000
+2025-05-13 23:35:10,055 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-13 23:35:10,056 - werkzeug - INFO -  * Restarting with stat
+2025-05-13 23:35:10,113 - __main__ - INFO - Запускаем безопасную проверку БД перед запуском приложения
+2025-05-13 23:35:10,113 - __main__ - INFO - Проверяем базу данных: instance\telecom_site.sqlite
+2025-05-13 23:35:10,113 - __main__ - WARNING - Обнаружен WAL-файл: instance\telecom_site.sqlite-wal
+2025-05-13 23:35:10,114 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-13 23:35:10,114 - __main__ - INFO - БД проверена, запускаем приложение
+2025-05-13 23:35:10,543 - app - INFO - Instance директория проверена: c:\Users\user\Desktop\учёба\Kyrosvaya\TestVersion\instance
+2025-05-13 23:35:10,549 - app - INFO - SQLite настроен с увеличенным timeout и WAL-режимом
+2025-05-13 23:35:10,575 - app.db_utils - INFO - SQLite journal mode set to: wal
+2025-05-13 23:35:10,586 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-13 23:35:10,586 - __main__ - INFO - Приложение готово к запуску
+2025-05-13 23:35:10,594 - werkzeug - WARNING -  * Debugger is active!
+2025-05-13 23:35:10,597 - werkzeug - INFO -  * Debugger PIN: 733-203-314
+2025-05-14 22:39:33,655 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-14 22:39:38,259 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.8.1.2:8000
+2025-05-14 22:39:38,260 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-14 22:39:38,261 - werkzeug - INFO -  * Restarting with stat
+2025-05-14 22:39:38,812 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-14 22:39:38,820 - werkzeug - WARNING -  * Debugger is active!
+2025-05-14 22:39:38,823 - werkzeug - INFO -  * Debugger PIN: 733-203-314
+2025-05-14 22:39:38,950 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:38] "[31m[1mGET /auth/profile HTTP/1.1[0m" 401 -
+2025-05-14 22:39:47,752 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:47] "GET / HTTP/1.1" 200 -
+2025-05-14 22:39:47,773 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:47] "[33mGET /static/img/products/iphone15.jpg HTTP/1.1[0m" 404 -
+2025-05-14 22:39:47,775 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:47] "[33mGET /static/img/products/samsung_s24.jpg HTTP/1.1[0m" 404 -
+2025-05-14 22:39:47,776 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:47] "[33mGET /static/img/products/ipad_air.jpg HTTP/1.1[0m" 404 -
+2025-05-14 22:39:47,777 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:47] "[33mGET /static/img/products/samsung_tab_s9.jpg HTTP/1.1[0m" 404 -
+2025-05-14 22:39:47,778 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:47] "[33mGET /static/img/products/airpods_pro.jpg HTTP/1.1[0m" 404 -
+2025-05-14 22:39:47,782 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:47] "[33mGET /static/img/app-store.png HTTP/1.1[0m" 404 -
+2025-05-14 22:39:47,784 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:47] "[33mGET /static/img/google-play.png HTTP/1.1[0m" 404 -
+2025-05-14 22:39:47,785 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:47] "[33mGET /static/img/app-mockup.png HTTP/1.1[0m" 404 -
+2025-05-14 22:39:47,828 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:47] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-05-14 22:39:47,845 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:47] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-05-14 22:39:49,437 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:49] "GET /cart/ HTTP/1.1" 200 -
+2025-05-14 22:39:49,458 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:49] "[33mGET /static/img/no-image.png HTTP/1.1[0m" 404 -
+2025-05-14 22:39:49,458 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-14 22:39:49,459 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:49] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-14 22:39:52,231 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:52] "GET /auth/login HTTP/1.1" 200 -
+2025-05-14 22:39:52,248 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:52] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-14 22:39:52,249 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:39:52] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-14 22:40:02,781 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:40:02] "POST /auth/login HTTP/1.1" 200 -
+2025-05-14 22:40:02,800 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:40:02] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-14 22:40:02,800 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:40:02] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-14 22:40:11,946 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:40:11] "POST /auth/login HTTP/1.1" 200 -
+2025-05-14 22:40:11,958 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:40:11] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-14 22:40:11,958 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:40:11] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-14 22:40:49,912 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:40:49] "POST /auth/login HTTP/1.1" 200 -
+2025-05-14 22:40:49,923 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:40:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-14 22:40:49,923 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:40:49] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-14 22:40:52,771 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:40:52] "GET /auth/login HTTP/1.1" 200 -
+2025-05-14 22:40:52,781 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:40:52] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-14 22:40:52,781 - werkzeug - INFO - 127.0.0.1 - - [14/May/2025 22:40:52] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-14 22:41:44,277 - werkzeug - INFO -  * Detected change in 'c:\\Users\\user\\Desktop\\учёба\\Kyrosvaya\\TestVersion\\tests\\test_cancel_order.py', reloading
+2025-05-14 22:41:44,345 - werkzeug - INFO -  * Restarting with stat
+2025-05-14 22:42:11,984 - werkzeug - INFO -  * Restarting with stat
+2025-05-14 22:42:25,118 - werkzeug - INFO -  * Restarting with stat
+2025-05-15 22:03:03,234 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:03:03,798 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:07:39,357 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:07:39,935 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:21:15,817 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:22:13,762 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:22:55,073 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:23:12,735 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:31:07,245 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:31:07,819 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:33:36,700 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:33:37,281 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:35:02,181 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:35:35,263 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:35:35,837 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:37:06,109 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:44:45,828 - __main__ - INFO - Проверяем базу данных: instance\telecom_site.sqlite
+2025-05-15 22:44:45,828 - __main__ - WARNING - Обнаружен WAL-файл: instance\telecom_site.sqlite-wal
+2025-05-15 22:44:45,828 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-15 22:44:45,828 - __main__ - INFO - Проверяем базу данных: instance\mts_site.sqlite
+2025-05-15 22:44:45,829 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-15 22:46:10,519 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:46:56,196 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:47:20,615 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:47:40,666 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:48:33,097 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:49:43,024 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:49:43,604 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:51:35,420 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:51:47,525 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:52:15,352 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:52:15,929 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:53:47,499 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:54:32,492 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:54:33,065 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:58:09,973 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:58:16,383 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:58:16,955 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:59:24,973 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 22:59:25,548 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:11:02,722 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:11:59,533 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:15:36,960 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:15:37,534 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:16:32,039 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:17:15,813 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:17:16,381 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:18:11,102 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:18:11,680 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:27:33,866 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:32:27,239 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:33:32,099 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:33:46,474 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:34:15,305 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:36:08,101 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:36:39,394 - __main__ - INFO - Запускаем безопасную проверку БД перед запуском приложения
+2025-05-15 23:36:39,394 - __main__ - INFO - Проверяем базу данных: instance\telecom_site.sqlite
+2025-05-15 23:36:39,394 - __main__ - WARNING - Обнаружен WAL-файл: instance\telecom_site.sqlite-wal
+2025-05-15 23:36:39,394 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-15 23:36:39,394 - __main__ - INFO - Проверяем базу данных: instance\mts_site.sqlite
+2025-05-15 23:36:39,395 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-15 23:36:39,395 - __main__ - INFO - БД проверена, запускаем приложение
+2025-05-15 23:36:39,857 - app - INFO - Instance директория проверена: C:\Users\user\Desktop\учёба\Kyrosvaya\TestVersion\instance
+2025-05-15 23:36:39,872 - app - INFO - SQLite настроен с увеличенным timeout и WAL-режимом
+2025-05-15 23:36:39,901 - app.db_utils - INFO - SQLite journal mode set to: wal
+2025-05-15 23:36:39,914 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:36:39,914 - __main__ - INFO - Приложение готово к запуску
+2025-05-15 23:36:44,527 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.8.1.2:8000
+2025-05-15 23:36:44,528 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-15 23:36:44,529 - werkzeug - INFO -  * Restarting with stat
+2025-05-15 23:36:44,587 - __main__ - INFO - Запускаем безопасную проверку БД перед запуском приложения
+2025-05-15 23:36:44,587 - __main__ - INFO - Проверяем базу данных: instance\telecom_site.sqlite
+2025-05-15 23:36:44,587 - __main__ - WARNING - Обнаружен WAL-файл: instance\telecom_site.sqlite-wal
+2025-05-15 23:36:44,587 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-15 23:36:44,588 - __main__ - INFO - Проверяем базу данных: instance\mts_site.sqlite
+2025-05-15 23:36:44,588 - __main__ - ERROR - Ошибка при проверке/исправлении базы данных: near "?": syntax error
+2025-05-15 23:36:44,588 - __main__ - INFO - БД проверена, запускаем приложение
+2025-05-15 23:36:45,029 - app - INFO - Instance директория проверена: C:\Users\user\Desktop\учёба\Kyrosvaya\TestVersion\instance
+2025-05-15 23:36:45,043 - app - INFO - SQLite настроен с увеличенным timeout и WAL-режимом
+2025-05-15 23:36:45,070 - app.db_utils - INFO - SQLite journal mode set to: wal
+2025-05-15 23:36:45,083 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-15 23:36:45,083 - __main__ - INFO - Приложение готово к запуску
+2025-05-15 23:36:45,090 - werkzeug - WARNING -  * Debugger is active!
+2025-05-15 23:36:45,093 - werkzeug - INFO -  * Debugger PIN: 733-203-314
+2025-05-16 09:49:18,967 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:49:19,554 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:51:47,903 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:51:48,475 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:52:03,844 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:52:31,454 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:53:01,303 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:56:33,035 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:56:33,597 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:56:56,431 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:56:56,990 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:57:08,204 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:57:08,767 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:58:04,697 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:58:05,250 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:58:51,728 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 09:58:52,290 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 10:06:16,379 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 10:06:31,782 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 10:10:50,194 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 10:10:50,768 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 10:23:09,186 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 10:23:09,675 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 10:24:44,789 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 10:24:45,376 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 10:29:45,943 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 10:29:46,734 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 17:49:31,710 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 17:49:32,281 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 17:54:48,080 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 17:58:13,770 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:21:33,612 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:21:34,165 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:32:10,263 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:36:46,435 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:37:06,244 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:37:18,252 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:37:32,527 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:37:34,499 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:38:22,191 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:39:13,315 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:39:26,445 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:44:11,345 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:44:33,383 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:44:33,956 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 18:59:19,430 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:00:27,131 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:01:17,116 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:01:49,182 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:02:19,038 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:02:41,115 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:03:05,439 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:05:12,338 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:08:15,122 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:18:40,306 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:18:40,872 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:27:46,757 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:28:14,403 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:30:15,725 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:44:40,242 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:48:26,029 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:49:00,371 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:49:36,784 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:50:13,301 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:50:46,472 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:51:22,988 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:51:46,114 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:51:49,224 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:54:32,915 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:55:47,282 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:57:52,954 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 19:58:16,168 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 20:07:39,198 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 20:19:01,675 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 20:19:02,253 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 20:21:03,326 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 20:21:03,886 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 20:27:07,460 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 20:27:26,190 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 20:29:07,923 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 21:21:02,323 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 21:21:02,901 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 21:22:22,022 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 21:22:52,306 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 21:22:52,876 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 21:42:48,264 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 21:42:48,870 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 21:44:32,409 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 21:46:55,087 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 22:14:24,270 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 22:28:17,223 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 22:28:17,799 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 22:55:45,949 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 22:55:46,526 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 23:17:50,212 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 23:18:09,047 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 23:20:43,198 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 23:28:08,893 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 23:28:17,592 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 23:28:29,723 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 23:28:40,743 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 23:28:49,502 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 23:38:09,550 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 23:38:18,225 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-16 23:39:48,244 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-17 11:41:20,203 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-17 11:41:20,787 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 14:23:21,509 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 14:23:22,100 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 14:30:45,516 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 14:30:46,087 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 14:45:26,723 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 14:45:51,027 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 14:47:02,246 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 14:50:46,277 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 14:51:01,071 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 14:51:01,665 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 14:56:36,406 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 14:57:22,019 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 15:00:32,618 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 15:10:08,416 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 15:10:39,187 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 15:10:39,759 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 15:28:43,807 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 15:35:03,086 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 15:37:08,976 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 15:37:17,643 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 15:38:07,730 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 15:38:47,215 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 15:38:47,777 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 15:39:46,822 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:11:16,577 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:11:17,142 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:47:05,275 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:47:05,854 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:49:35,509 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:50:00,970 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:53:01,899 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:53:02,466 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:54:00,054 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:54:00,625 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:56:51,634 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:57:24,948 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:57:42,592 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 16:57:54,627 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:01:27,952 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:01:41,150 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:03:15,974 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:03:32,441 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:03:56,704 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:03:57,270 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:05:39,800 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:07:47,042 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:08:08,059 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:08:39,083 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:08:56,676 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:34:53,551 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями
+2025-05-18 17:34:54,141 - __main__ - INFO - SQLite настроен с увеличенным timeout и оптимизациями

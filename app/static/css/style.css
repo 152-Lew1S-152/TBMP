@@ -1,0 +1,229 @@
+/* Main styles for TBMP site */
+
+/* Основной градиент для сайта */
+:root {
+    --blue-color: #0066cc;
+    --green-color: #00994d;
+    --main-gradient: linear-gradient(135deg, var(--blue-color), var(--green-color));
+    --main-gradient-hover: linear-gradient(135deg, #004d99, #006633);
+}
+
+/* Common styles */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.05), rgba(0, 153, 77, 0.05));
+    background-attachment: fixed;
+}
+
+main {
+    flex: 1;
+}
+
+a {
+    color: var(--blue-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--green-color);
+    text-decoration: underline;
+}
+
+.btn-primary {
+    background: var(--main-gradient);
+    border: none;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background: var(--main-gradient-hover);
+    border: none;
+}
+
+.btn-success {
+    background: var(--main-gradient);
+    border: none;
+    transition: all 0.3s;
+}
+
+.btn-success:hover {
+    background: var(--main-gradient-hover);
+    border: none;
+}
+
+.btn-outline-primary {
+    color: var(--blue-color);
+    border-color: var(--blue-color);
+    transition: all 0.3s;
+}
+
+.btn-outline-primary:hover {
+    background: var(--main-gradient);
+    border-color: transparent;
+    color: white;
+}
+
+.bg-primary {
+    background: var(--main-gradient) !important;
+}
+
+.text-primary {
+    color: var(--blue-color) !important;
+}
+
+.text-success {
+    color: var(--green-color) !important;
+}
+
+/* Header styles */
+.navbar-brand img {
+    max-height: 40px;
+}
+
+/* Product styles */
+.product-img-container {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow: hidden;
+}
+
+.product-img {
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+.section-title {
+    position: relative;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.section-title:after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 3px;
+    background: var(--main-gradient);
+    bottom: 0;
+    left: 0;
+}
+
+/* Hero section */
+.hero-section {
+    margin-top: -1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Cart page */
+.cart-item {
+    border-bottom: 1px solid #eee;
+    padding: 1rem 0;
+}
+
+.cart-qty {
+    width: 60px;
+    text-align: center;
+}
+
+/* Auth pages */
+.auth-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Footer styles */
+footer {
+    margin-top: auto;
+    background: linear-gradient(135deg, #004080, #005040) !important;
+}
+
+footer h5 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, var(--blue-color), var(--green-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+footer .social-links a {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--main-gradient);
+    text-align: center;
+    line-height: 36px;
+    transition: all 0.3s;
+    margin-right: 0.5rem;
+    opacity: 0.8;
+}
+
+footer .social-links a:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+}
+
+/* Градиентная линия-разделитель */
+.gradient-divider {
+    height: 3px;
+    background: var(--main-gradient);
+    margin: 2rem 0;
+    border-radius: 2px;
+}
+
+/* Переопределение предупреждений */
+.alert-danger {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1), rgba(0, 153, 77, 0.1));
+    border-left: 4px solid transparent;
+    border-image: var(--main-gradient);
+    border-image-slice: 1;
+    color: #333;
+}
+
+.text-danger {
+    background: var(--main-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Небольшой градиентный декор */
+.gradient-accent {
+    position: relative;
+}
+
+.gradient-accent:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--main-gradient);
+    border-radius: 2px;
+}
+
+/* Media queries */
+@media (max-width: 767.98px) {
+    .section-title:after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .section-title {
+        text-align: center;
+    }
+}

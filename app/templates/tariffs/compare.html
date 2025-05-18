@@ -1,0 +1,343 @@
+{% extends 'base.html' %}
+
+{% block title %}Сравнение тарифов{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('tariffs.index') }}">Тарифы</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Сравнение тарифов</li>
+    </ol>
+</nav>
+
+<h1 class="mb-4">Сравнение тарифных планов</h1>
+
+<div class="table-responsive mb-5">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-danger">
+                <th scope="col">Параметры</th>
+                {% for tariff in tariffs %}
+                    <th scope="col">{{ tariff.name }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Абонентская плата</th>
+                {% for tariff in tariffs %}
+                    <td>{{ tariff.price|round|int }} ₽/{{ tariff.period }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Интернет</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        {% if "Безлимит" in tariff.name %}
+                            <strong class="text-success">Безлимитный</strong>
+                        {% elif "Оптима" in tariff.name %}
+                            30 ГБ
+                        {% else %}
+                            15 ГБ
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>            <tr>
+                <th scope="row">Звонки внутри сети</th>
+                {% for tariff in tariffs %}
+                    <td><span class="text-success">Безлимитно</span></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Звонки на другие номера России</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        {% if "Безлимит" in tariff.name %}
+                            1000 минут
+                        {% elif "Оптима" in tariff.name %}
+                            500 минут
+                        {% else %}
+                            200 минут
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">SMS</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        {% if "Безлимит" in tariff.name %}
+                            100 SMS
+                        {% elif "Оптима" in tariff.name %}
+                            50 SMS
+                        {% else %}
+                            30 SMS
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Безлимитные мессенджеры</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        {% if "Лайт" in tariff.name %}
+                            <i class="fas fa-check text-success"></i>
+                        {% else %}
+                            <i class="fas fa-check text-success"></i>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Безлимитные соцсети</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        {% if "Лайт" in tariff.name %}
+                            <i class="fas fa-times text-danger"></i>
+                        {% else %}
+                            <i class="fas fa-check text-success"></i>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Безлимитный YouTube</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        {% if "Безлимит" in tariff.name %}
+                            <i class="fas fa-check text-success"></i>
+                        {% else %}
+                            <i class="fas fa-times text-danger"></i>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Раздача интернета</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        {% if "Безлимит" in tariff.name %}
+                            30 ГБ
+                        {% elif "Оптима" in tariff.name %}
+                            15 ГБ
+                        {% else %}
+                            10 ГБ
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Интернет в роуминге</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        {% if "Безлимит" in tariff.name %}
+                            1 ГБ
+                        {% elif "Оптима" in tariff.name %}
+                            500 МБ
+                        {% else %}
+                            100 МБ
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Звонки в роуминге</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        {% if "Безлимит" in tariff.name %}
+                            30 минут
+                        {% elif "Оптима" in tariff.name %}
+                            15 минут
+                        {% else %}
+                            5 минут
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>            <tr>
+                <th scope="row">ТВ-подписка</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        {% if "Безлимит" in tariff.name %}
+                            <i class="fas fa-check text-success"></i>
+                        {% else %}
+                            <i class="fas fa-times text-danger"></i>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Кешбэк на карту</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        {% if "Безлимит" in tariff.name %}
+                            5%
+                        {% elif "Оптима" in tariff.name %}
+                            3%
+                        {% else %}
+                            1%
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Подробнее</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        <a href="{{ url_for('tariffs.tariff_detail', tariff_id=tariff.id) }}" class="btn btn-outline-danger btn-sm">Перейти</a>
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Подключить</th>
+                {% for tariff in tariffs %}
+                    <td>
+                        <a href="{{ url_for('tariffs.tariff_detail', tariff_id=tariff.id) }}" class="btn {% if "Безлимит" in tariff.name %}btn-danger{% else %}btn-outline-danger{% endif %} btn-sm">Подключить</a>
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="text-center mb-5">
+    <h2 class="mb-4">Не знаете какой тариф выбрать?</h2>
+    <p class="lead mb-4">Мы поможем подобрать оптимальный тариф для ваших потребностей</p>
+    <a href="#" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#tariffSelectorModal">Подобрать тариф</a>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="tariffSelectorModal" tabindex="-1" aria-labelledby="tariffSelectorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tariffSelectorModalLabel">Подбор оптимального тарифа</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="tariffSelectorForm">
+                    <div class="mb-3">
+                        <label class="form-label">Сколько интернет-трафика вы используете в месяц?</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="internetUsage" id="internetUsageLow" value="low">
+                            <label class="form-check-label" for="internetUsageLow">
+                                До 15 ГБ в месяц
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="internetUsage" id="internetUsageMedium" value="medium">
+                            <label class="form-check-label" for="internetUsageMedium">
+                                От 15 до 30 ГБ в месяц
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="internetUsage" id="internetUsageHigh" value="high">
+                            <label class="form-check-label" for="internetUsageHigh">
+                                Более 30 ГБ в месяц
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Сколько минут вы обычно разговариваете в месяц?</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="callMinutes" id="callMinutesLow" value="low">
+                            <label class="form-check-label" for="callMinutesLow">
+                                До 200 минут в месяц
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="callMinutes" id="callMinutesMedium" value="medium">
+                            <label class="form-check-label" for="callMinutesMedium">
+                                От 200 до 500 минут в месяц
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="callMinutes" id="callMinutesHigh" value="high">
+                            <label class="form-check-label" for="callMinutesHigh">
+                                Более 500 минут в месяц
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Какие социальные сети и мессенджеры вы часто используете?</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="socialApps" id="socialAppsMessengers" value="messengers">
+                            <label class="form-check-label" for="socialAppsMessengers">
+                                Только мессенджеры (WhatsApp, Telegram, Viber)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="socialApps" id="socialAppsSocial" value="social">
+                            <label class="form-check-label" for="socialAppsSocial">
+                                Социальные сети (ВКонтакте, Одноклассники и др.)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="socialApps" id="socialAppsYouTube" value="youtube">
+                            <label class="form-check-label" for="socialAppsYouTube">
+                                YouTube и другие видеосервисы
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="budgetRange" class="form-label">Ваш месячный бюджет на связь</label>
+                        <input type="range" class="form-range" min="200" max="1000" step="50" id="budgetRange" value="450">
+                        <div class="d-flex justify-content-between">
+                            <span>200 ₽</span>
+                            <span id="budgetValue">450 ₽</span>
+                            <span>1000 ₽</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-danger" id="findTariffBtn">Подобрать тариф</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Обновление значения бюджета при изменении ползунка
+    const budgetRange = document.getElementById('budgetRange');
+    const budgetValue = document.getElementById('budgetValue');
+    
+    budgetRange.addEventListener('input', function() {
+        budgetValue.textContent = this.value + ' ₽';
+    });
+    
+    // Подбор тарифа
+    const findTariffBtn = document.getElementById('findTariffBtn');
+    findTariffBtn.addEventListener('click', function() {
+        const internetUsage = document.querySelector('input[name="internetUsage"]:checked')?.value || '';
+        const callMinutes = document.querySelector('input[name="callMinutes"]:checked')?.value || '';
+        const socialApps = Array.from(document.querySelectorAll('input[name="socialApps"]:checked')).map(cb => cb.value);
+        const budget = parseInt(budgetRange.value);
+        
+        let recommendedTariff;
+          if (internetUsage === 'high' || socialApps.includes('youtube') || callMinutes === 'high' || budget >= 600) {
+            recommendedTariff = '{{ url_for("tariffs.tariff_detail", tariff_id=3) }}';  // Безлимит
+        } else if ((internetUsage === 'medium' || callMinutes === 'medium' || socialApps.includes('social')) && budget >= 400) {
+            recommendedTariff = '{{ url_for("tariffs.tariff_detail", tariff_id=2) }}';  // Оптима
+        } else {
+            recommendedTariff = '{{ url_for("tariffs.tariff_detail", tariff_id=1) }}';  // Лайт
+        }
+        
+        // Закрываем модальное окно и перенаправляем на рекомендованный тариф
+        const modal = bootstrap.Modal.getInstance(document.getElementById('tariffSelectorModal'));
+        modal.hide();
+        
+        setTimeout(() => {
+            window.location.href = recommendedTariff;
+        }, 300);
+    });
+});
+</script>
+{% endblock %}

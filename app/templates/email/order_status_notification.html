@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Обновление статуса заказа</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+        }        .header {
+            background: linear-gradient(135deg, #0066cc, #00994d);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .footer {
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th, table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }        .status {
+            font-weight: bold;
+            background: linear-gradient(90deg, #0066cc, #00994d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #0066cc, #00994d);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>TBMP - Обновление статуса заказа</h1>
+    </div>
+    
+    <div class="content">
+        <h2>Здравствуйте, {{ order.user.first_name }}!</h2>
+        
+        <p>Информируем вас о том, что статус вашего заказа №{{ order.id }} был обновлен.</p>
+        
+        <p>Текущий статус заказа: <span class="status">{{ status_text }}</span></p>
+        
+        <h3>Информация о заказе:</h3>
+        <table>
+            <tr>
+                <th>Номер заказа:</th>
+                <td>{{ order.id }}</td>
+            </tr>
+            <tr>
+                <th>Дата оформления:</th>
+                <td>{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+            </tr>
+            <tr>
+                <th>Общая сумма:</th>
+                <td>{{ order.total_price }} ₽</td>
+            </tr>
+            <tr>
+                <th>Способ доставки:</th>
+                <td>
+                    {% if order.shipping_method == 'courier' %}
+                        Курьерская доставка
+                    {% elif order.shipping_method == 'pickup' %}
+                        Самовывоз
+                    {% else %}
+                        {{ order.shipping_method }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Адрес доставки:</th>
+                <td>{{ order.shipping_address }}</td>
+            </tr>
+        </table>
+        
+        <p>
+            <a href="http://localhost:5000{{ url_for('auth.order_detail', order_id=order.id) }}" class="button">Просмотреть заказ</a>
+        </p>
+        
+        <p>Если у вас возникли вопросы, пожалуйста, свяжитесь с нашей службой поддержки.</p>
+          <p>С уважением,<br>
+        Команда TBMP</p>
+    </div>
+    
+    <div class="footer">        <p>Это автоматическое сообщение, пожалуйста, не отвечайте на него.</p>
+        <p>© 2023 TBMP. Все права защищены.</p>
+    </div>
+</body>
+</html>

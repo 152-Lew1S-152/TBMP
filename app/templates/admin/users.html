@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Управление пользователями{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Главная</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('auth.profile') }}">Личный кабинет</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('admin_panel.index') }}">Админ-панель</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Пользователи</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Управление пользователями</h1>
+    </div>
+
+    <div class="row">
+        <!-- Боковое меню -->
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Управление сайтом</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{{ url_for('admin_panel.index') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-tachometer-alt me-2"></i>Панель управления
+                    </a>
+                    <a href="{{ url_for('admin_panel.products') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-mobile-alt me-2"></i>Товары
+                    </a>
+                    <a href="{{ url_for('admin_panel.categories') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-th-large me-2"></i>Категории
+                    </a>
+                    <a href="{{ url_for('admin_panel.tariffs') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-list me-2"></i>Тарифы
+                    </a>
+                    <a href="{{ url_for('admin_panel.orders') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-shopping-cart me-2"></i>Заказы
+                    </a>
+                    <a href="{{ url_for('admin_panel.users') }}" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-users me-2"></i>Пользователи
+                    </a>
+                    <a href="{{ url_for('auth.profile') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-arrow-left me-2"></i>Вернуться в профиль
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h5 class="mb-0">Список пользователей</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <form class="d-flex">
+                                <input class="form-control me-2" type="search" placeholder="Поиск пользователей..." aria-label="Search">
+                                <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Имя пользователя</th>
+                                    <th>Email</th>
+                                    <th>Имя</th>
+                                    <th>Фамилия</th>
+                                    <th>Дата регистрации</th>
+                                    <th>Статус</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                <tr>
+                                    <td>{{ user.id }}</td>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.first_name or '-' }}</td>
+                                    <td>{{ user.last_name or '-' }}</td>
+                                    <td>{{ user.created_at.strftime('%d.%m.%Y') }}</td>
+                                    <td>
+                                        {% if user.is_admin %}
+                                            <span class="badge bg-success">Администратор</span>
+                                        {% else %}
+                                            <span class="badge bg-primary">Пользователь</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-sm btn-info" 
+                                                    data-bs-toggle="modal" data-bs-target="#editUserModal"
+                                                    data-user-id="{{ user.id }}">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            {% if not user.is_admin or current_user.id != user.id %}
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteUserModal"
+                                                    data-user-id="{{ user.id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно изменения статуса пользователя -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Изменить статус пользователя</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('admin_panel.edit_user') }}" method="post">
+                    <input type="hidden" name="id" id="edit_user_id">
+                    <div class="mb-3">
+                        <label for="user_status" class="form-label">Статус пользователя</label>
+                        <select class="form-select" id="user_status" name="is_admin">
+                            <option value="0">Пользователь</option>
+                            <option value="1">Администратор</option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно удаления пользователя -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModalLabel">Подтверждение удаления</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Вы действительно хотите удалить этого пользователя?</p>
+                <p class="text-danger">Внимание: Это действие нельзя отменить!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <form action="{{ url_for('admin_panel.delete_user') }}" method="post">
+                    <input type="hidden" id="delete_user_id" name="id">
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Обработчик открытия модальных окон
+    document.addEventListener('DOMContentLoaded', function() {
+        // Передача ID пользователя в модальное окно редактирования
+        var editUserModal = document.getElementById('editUserModal');
+        if (editUserModal) {
+            editUserModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var userId = button.getAttribute('data-user-id');
+                var userIdInput = document.getElementById('edit_user_id');
+                userIdInput.value = userId;
+            });
+        }
+        
+        // Передача ID пользователя в модальное окно удаления
+        var deleteUserModal = document.getElementById('deleteUserModal');
+        if (deleteUserModal) {
+            deleteUserModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var userId = button.getAttribute('data-user-id');
+                var userIdInput = document.getElementById('delete_user_id');
+                userIdInput.value = userId;
+            });
+        }
+    });
+</script>
+{% endblock %}

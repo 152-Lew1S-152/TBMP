@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}TBMP - Тарифы{% endblock %}
+
+{% block content %}
+<!-- Остальной код не меняется -->
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Добавляем обработчик изменений в фильтрах для автоматического применения
+    const filterForm = document.getElementById('filterForm');
+    const selects = filterForm.querySelectorAll('select');
+    
+    // Автоматическая отправка формы при изменении любого фильтра
+    selects.forEach(select => {
+        select.addEventListener('change', function() {
+            filterForm.submit();
+        });
+    });
+});
+
+// Функция сброса всех фильтров
+function resetFilters() {
+    const form = document.getElementById('filterForm');
+    const selects = form.querySelectorAll('select');
+    selects.forEach(select => {
+        select.value = 'all';
+    });
+    form.submit();
+}
+</script>
+{% endblock %}
